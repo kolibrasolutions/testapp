@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Atendimento - FarmaLearn</title>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <style>
+        /* Estilos específicos para a página de simulador */
+        .simulacao-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .simulacao-filters select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-background);
+            color: var(--text-color);
+        }
+        
+        .simulacao-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .simulacao-card {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .simulacao-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .simulacao-header {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .simulacao-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .simulacao-body {
+            padding: 15px;
+        }
+        
+        .simulacao-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .simulacao-category, .simulacao-public {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .simulacao-difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .difficulty-facil {
+            background-color: #2ECC71;
+            color: white;
+        }
+        
+        .difficulty-media {
+            background-color: #F39C12;
+            color: white;
+        }
+        
+        .difficulty-dificil {
+            background-color: #E74C3C;
+            color: white;
+        }
+        
+        /* Estilos para a simulação em andamento */
+        .simulacao-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cenario-inicial {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .cliente-fala {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid #3498DB;
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 15px;
+        }
+        
+        .contexto-info {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ECC71;
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .passo-container {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .passo-pergunta {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .opcoes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .opcao-item {
+            background-color: rgba(0, 0, 0, 0.03);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .opcao-item:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(30, 132, 73, 0.05);
+        }
+        
+        .opcao-item.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(30, 132, 73, 0.1);
+        }
+        
+        .opcao-item.correct {
+            border-color: #2ECC71;
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+        
+        .opcao-item.incorrect {
+            border-color: #E74C3C;
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        
+        .feedback-container {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .feedback-correct {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 1px solid #2ECC71;
+        }
+        
+        .feedback-incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid #E74C3C;
+        }
+        
+        .feedback-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .feedback-text {
+            font-size: 0.95rem;
+        }
+        
+        .passo-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .informacao-texto {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid #3498DB;
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        /* Resultado da simulação */
+        .resultado-container {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .resultado-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .resultado-icon.success {
+            color: #2ECC71;
+        }
+        
+        .resultado-icon.failure {
+            color: #E74C3C;
+        }
+        
+        .resultado-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .resultado-message {
+            margin-bottom: 30px;
+        }
+        
+        .resultado-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .ticket-medio-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #F39C12;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .resultado-actions {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <!-- Barra lateral -->
+        <div class="sidebar">
+            <div class="sidebar-fixed">
+                <div class="logo-container">
+                    <img src="img/logo.png" alt="FarmaLearn Logo" class="logo" id="logo-placeholder">
+                </div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">JU</div>
+                    <div class="user-details">
+                        <div class="user-name">Juliano</div>
+                        <div class="user-role">Balconista</div>
+                    </div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-home nav-icon"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="flashcards.html" class="nav-link">
+                            <i class="fas fa-clone nav-icon"></i>
+                            Flashcards
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="simulador.html" class="nav-link active">
+                            <i class="fas fa-comments nav-icon"></i>
+                            Simulador
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="estatisticas.html" class="nav-link">
+                            <i class="fas fa-chart-bar nav-icon"></i>
+                            Estatísticas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="conquistas.html" class="nav-link">
+                            <i class="fas fa-trophy nav-icon"></i>
+                            Conquistas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="configuracoes.html" class="nav-link">
+                            <i class="fas fa-cog nav-icon"></i>
+                            Configurações
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Conteúdo principal -->
+        <div class="content">
+            <div class="container">
+                <h1>Simulador de Atendimento</h1>
+                <p>Pratique situações reais de atendimento no balcão da farmácia.</p>
+                
+                <!-- Seleção de simulação -->
+                <div id="simulacao-selection">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Escolha uma simulação</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="simulacao-filters">
+                                <div class="form-group">
+                                    <label class="form-label">Categoria</label>
+                                    <select id="categoria-filter" class="form-control">
+                                        <option value="">Todas as categorias</option>
+                                        <option value="Respiratório">Problemas Respiratórios</option>
+                                        <option value="Dermatológico">Problemas Dermatológicos</option>
+                                        <option value="Digestivo">Problemas Digestivos</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Público</label>
+                                    <select id="publico-filter" class="form-control">
+                                        <option value="">Todos os públicos</option>
+                                        <option value="Adulto">Adulto</option>
+                                        <option value="Infantil">Infantil</option>
+                                        <option value="Idoso">Idoso</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="simulacao-list" id="simulacao-list">
+                                <!-- Simulações serão carregadas dinamicamente aqui -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recomendações -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Recomendações para você</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="simulacao-list" id="recomendacoes-list">
+                                <!-- Recomendações serão carregadas dinamicamente aqui -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Simulação em andamento -->
+                <div id="simulacao-em-andamento" style="display: none;">
+                    <div class="simulacao-container">
+                        <div class="cenario-inicial" id="cenario-inicial">
+                            <h2 id="simulacao-titulo">Título da Simulação</h2>
+                            <div class="cliente-fala" id="cliente-fala">
+                                "Bom dia! Estou com uma gripe forte há dois dias. Estou com febre, dor no corpo e um pouco de tosse. Pode me indicar alguma coisa?"
+                            </div>
+                            <div class="contexto-info" id="contexto-info">
+                                Homem de aproximadamente 35 anos, aparenta cansaço e está com o nariz congestionado.
+                            </div>
+                        </div>
+                        
+                        <div class="passo-container" id="passo-container">
+                            <!-- Conteúdo do passo atual será carregado dinamicamente aqui -->
+                        </div>
+                        
+                        <div class="passo-actions">
+                            <button id="voltar-simulacoes" class="btn btn-outline">Cancelar simulação</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resultado da simulação -->
+                <div id="resultado-simulacao" style="display: none;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="resultado-container">
+                                <div class="resultado-icon" id="resultado-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="resultado-title" id="resultado-title">Parabéns! Atendimento bem-sucedido</div>
+                                <div class="resultado-message" id="resultado-message">
+                                    Você realizou um atendimento correto, indicando medicamentos apropriados para os sintomas do cliente e fornecendo orientações importantes.
+                                </div>
+                                
+                                <div id="ticket-medio-badge" class="ticket-medio-badge">
+                                    <i class="fas fa-chart-line"></i> Ticket médio aumentado!
+                                </div>
+                                
+                                <div class="resultado-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-value" id="respostas-corretas">4</div>
+                                        <div class="stat-label">Respostas corretas</div>
+                                    </div>
+                                    
+                                    <div class="stat-item">
+                                        <div class="stat-value" id="total-respostas">5</div>
+                                        <div class="stat-label">Total de respostas</div>
+                                    </div>
+                                    
+                                    <div class="stat-item">
+                                        <div class="stat-value" id="percentual-acerto">80%</div>
+                                        <div class="stat-label">Percentual de acerto</div>
+                                    </div>
+                                    
+                                    <div class="stat-item">
+                                        <div class="stat-value" id="pontos-ganhos">100</div>
+                                        <div class="stat-label">Pontos ganhos</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="resultado-actions">
+                                    <button id="nova-simulacao" class="btn btn-primary">Nova simulação</button>
+                                    <a href="index.html" class="btn btn-outline">Voltar ao Dashboard</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botão de alternância de tema -->
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <!-- Templates para geração dinâmica de conteúdo -->
+    <template id="template-simulacao-card">
+        <div class="simulacao-card" data-id="">
+            <div class="simulacao-header">
+                <h3 class="simulacao-title"></h3>
+            </div>
+            <div class="simulacao-body">
+                <div class="simulacao-info">
+                    <div class="simulacao-category"></div>
+                    <div class="simulacao-public"></div>
+                </div>
+                <div class="simulacao-difficulty"></div>
+            </div>
+        </div>
+    </template>
+    
+    <template id="template-passo-pergunta">
+        <div class="passo-pergunta"></div>
+        <div class="opcoes-container"></div>
+        <div class="feedback-container">
+            <div class="feedback-title"></div>
+            <div class="feedback-text"></div>
+        </div>
+        <div class="passo-actions">
+            <button class="btn btn-primary continuar-btn" style="display: none;">Continuar</button>
+        </div>
+    </template>
+    
+    <template id="template-opcao-item">
+        <div class="opcao-item" data-id="">
+        </div>
+    </template>
+    
+    <template id="template-passo-informacao">
+        <div class="informacao-texto"></div>
+        <div class="passo-actions">
+            <button class="btn btn-primary continuar-btn">Continuar</button>
+        </div>
+    </template>
+    
+    <!-- Scripts -->
+    <script type="module">
+        import ThemeManager from './js/theme.js';
+        import SimuladorSystem from './js/simulador.js';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializa o gerenciador de tema
+            const themeManager = new ThemeManager();
+            themeManager.initThemeToggle();
+            
+            // Gerar logo placeholder se a imagem não existir
+            const logoPlaceholder = document.getElementById('logo-placeholder');
+            logoPlaceholder.onerror = function() {
+                this.onerror = null;
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjYwIiB2aWV3Qm94PSIwIDAgMTUwIDYwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zMCAxMEMyMC41NyAxMCAxMyAxNy41NyAxMyAyN0MxMyAzNi40MyAyMC41NyA0NCA0MCA0NEM1Ni41NyA0NCA3MCAzNi40MyA3MCAyN0M3MCAxNy41NyA1Ni41NyAxMCAzMCAxMFoiIGZpbGw9IiMxRTg0NDkiLz48cGF0aCBkPSJNMzUgMjBMMjUgMjdMMzUgMzRWMjBaIiBmaWxsPSJ3aGl0ZSIvPjx0ZXh0IHg9IjU1IiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFFODQ0OSI+RmFybWFMZWFybjwvdGV4dD48L3N2Zz4=';
+            };
+            
+            // Inicializa o sistema de simulação
+            const simuladorSystem = new SimuladorSystem();
+            let simulacaoAtual = null;
+            
+            // Elementos da interface
+            const simulacaoSelection = document.getElementById('simulacao-selection');
+            const simulacaoEmAndamento = document.getElementById('simulacao-em-andamento');
+            const resultadoSimulacao = document.getElementById('resultado-simulacao');
+            const simulacaoList = document.getElementById('simulacao-list');
+            const recomendacoesList = document.getElementById('recomendacoes-list');
+            const categoriaFilter = document.getElementById('categoria-filter');
+            const publicoFilter = document.getElementById('publico-filter');
+            const voltarSimulacoesBtn = document.getElementById('voltar-simulacoes');
+            const novaSimulacaoBtn = document.getElementById('nova-simulacao');
+            
+            // Elementos do cenário
+            const simulacaoTitulo = document.getElementById('simulacao-titulo');
+            const clienteFala = document.getElementById('cliente-fala');
+            const contextoInfo = document.getElementById('contexto-info');
+            const passoContainer = document.getElementById('passo-container');
+            
+            // Elementos do resultado
+            const resultadoIcon = document.getElementById('resultado-icon');
+            const resultadoTitle = document.getElementById('resultado-title');
+            const resultadoMessage = document.getElementById('resultado-message');
+            const ticketMedioBadge = document.getElementById('ticket-medio-badge');
+            const respostasCorretas = document.getElementById('respostas-corretas');
+            const totalRespostas = document.getElementById('total-respostas');
+            const percentualAcerto = document.getElementById('percentual-acerto');
+            const pontosGanhos = document.getElementById('pontos-ganhos');
+            
+            // Templates
+            const templateSimulacaoCard = document.getElementById('template-simulacao-card');
+            const templatePassoPergunta = document.getElementById('template-passo-pergunta');
+            const templateOpcaoItem = document.getElementById('template-opcao-item');
+            const templatePassoInformacao = document.getElementById('template-passo-informacao');
+            
+            // Carrega as simulações disponíveis
+            function carregarSimulacoes() {
+                const categoria = categoriaFilter.value;
+                const publico = publicoFilter.value;
+                
+                const simulacoes = simuladorSystem.getSimulacoes(
+                    categoria || null,
+                    publico || null
+                );
+                
+                // Limpa a lista atual
+                simulacaoList.innerHTML = '';
+                
+                // Adiciona os cards de simulação
+                simulacoes.forEach(simulacao => {
+                    const card = criarSimulacaoCard(simulacao);
+                    simulacaoList.appendChild(card);
+                });
+                
+                // Se não houver simulações, exibe mensagem
+                if (simulacoes.length === 0) {
+                    simulacaoList.innerHTML = '<p>Nenhuma simulação encontrada com os filtros selecionados.</p>';
+                }
+            }
+            
+            // Carrega as recomendações
+            function carregarRecomendacoes() {
+                const recomendacoes = simuladorSystem.getRecomendacoes();
+                
+                // Limpa a lista atual
+                recomendacoesList.innerHTML = '';
+                
+                // Adiciona os cards de simulação recomendada
+                recomendacoes.simulacoesRecomendadas.forEach(simulacao => {
+                    const card = criarSimulacaoCard(simulacao);
+                    recomendacoesList.appendChild(card);
+                });
+                
+                // Se não houver recomendações, exibe mensagem
+                if (recomendacoes.simulacoesRecomendadas.length === 0) {
+                    recomendacoesList.innerHTML = '<p>Nenhuma recomendação disponível no momento.</p>';
+                }
+            }
+            
+            // Cria um card de simulação
+            function criarSimulacaoCard(simulacao) {
+                const template = templateSimulacaoCard.content.cloneNode(true);
+                const card = template.querySelector('.simulacao-card');
+                
+                card.dataset.id = simulacao.id;
+                card.querySelector('.simulacao-title').textContent = simulacao.titulo;
+                card.querySelector('.simulacao-category').textContent = `Categoria: ${simulacao.categoria}`;
+                card.querySelector('.simulacao-public').textContent = `Público: ${simulacao.publico}`;
+                
+                const difficultyElement = card.querySelector('.simulacao-difficulty');
+                difficultyElement.textContent = traduzirDificuldade(simulacao.dificuldade);
+                difficultyElement.classList.add(`difficulty-${simulacao.dificuldade}`);
+                
+                // Adiciona evento de clique
+                card.addEventListener('click', () => iniciarSimulacao(simulacao.id));
+                
+                return card;
+            }
+            
+            // Traduz o nível de dificuldade
+            function traduzirDificuldade(dificuldade) {
+                switch (dificuldade) {
+                    case 'facil': return 'Fácil';
+                    case 'media': return 'Média';
+                    case 'dificil': return 'Difícil';
+                    default: return dificuldade;
+                }
+            }
+            
+            // Inicia uma simulação
+            function iniciarSimulacao(simulacaoId) {
+                try {
+                    simulacaoAtual = simuladorSystem.iniciarSimulacao(simulacaoId);
+                    
+                    // Atualiza o cenário inicial
+                    simulacaoTitulo.textContent = simulacaoAtual.titulo;
+                    clienteFala.textContent = simulacaoAtual.cenarioInicial.cliente;
+                    contextoInfo.textContent = simulacaoAtual.cenarioInicial.contexto;
+                    
+                    // Carrega o primeiro passo
+                    carregarPasso(simulacaoAtual.primeiroPasso);
+                    
+                    // Mostra a simulação em andamento
+                    simulacaoSelection.style.display = 'none';
+                    simulacaoEmAndamento.style.display = 'block';
+                    resultadoSimulacao.style.display = 'none';
+                } catch (error) {
+                    console.error('Erro ao iniciar simulação:', error);
+                    alert('Erro ao iniciar a simulação. Por favor, tente novamente.');
+                }
+            }
+            
+            // Carrega um passo da simulação
+            function carregarPasso(passo) {
+                // Limpa o container
+                passoContainer.innerHTML = '';
+                
+                // Carrega o conteúdo do passo de acordo com o tipo
+                if (passo.tipo === 'pergunta') {
+                    carregarPassoPergunta(passo);
+                } else if (passo.tipo === 'informacao') {
+                    carregarPassoInformacao(passo);
+                } else if (passo.tipo === 'resultado') {
+                    mostrarResultado(passo);
+                }
+            }
+            
+            // Carrega um passo do tipo pergunta
+            function carregarPassoPergunta(passo) {
+                const template = templatePassoPergunta.content.cloneNode(true);
+                
+                template.querySelector('.passo-pergunta').textContent = passo.texto;
+                
+                const opcoesContainer = template.querySelector('.opcoes-container');
+                
+                // Adiciona as opções
+                passo.opcoes.forEach(opcao => {
+                    const opcaoTemplate = templateOpcaoItem.content.cloneNode(true);
+                    const opcaoItem = opcaoTemplate.querySelector('.opcao-item');
+                    
+                    opcaoItem.dataset.id = opcao.id;
+                    opcaoItem.textContent = opcao.texto;
+                    
+                    // Adiciona evento de clique
+                    opcaoItem.addEventListener('click', function() {
+                        // Remove a seleção de outras opções
+                        opcoesContainer.querySelectorAll('.opcao-item').forEach(item => {
+                            item.classList.remove('selected');
+                        });
+                        
+                        // Seleciona esta opção
+                        this.classList.add('selected');
+                        
+                        // Registra a resposta
+                        try {
+                            const proximoPasso = simuladorSystem.responder(opcao.id);
+                            
+                            // Mostra feedback
+                            const feedbackContainer = passoContainer.querySelector('.feedback-container');
+                            const feedbackTitle = passoContainer.querySelector('.feedback-title');
+                            const feedbackText = passoContainer.querySelector('.feedback-text');
+                            
+                            feedbackContainer.style.display = 'block';
+                            
+                            if (opcao.correto) {
+                                feedbackContainer.classList.add('feedback-correct');
+                                feedbackTitle.textContent = 'Correto!';
+                                this.classList.add('correct');
+                            } else {
+                                feedbackContainer.classList.add('feedback-incorrect');
+                                feedbackTitle.textContent = 'Incorreto';
+                                this.classList.add('incorrect');
+                            }
+                            
+                            feedbackText.textContent = opcao.feedback;
+                            
+                            // Desabilita as opções
+                            opcoesContainer.querySelectorAll('.opcao-item').forEach(item => {
+                                item.style.pointerEvents = 'none';
+                            });
+                            
+                            // Mostra o botão de continuar
+                            const continuarBtn = passoContainer.querySelector('.continuar-btn');
+                            continuarBtn.style.display = 'block';
+                            continuarBtn.addEventListener('click', () => carregarPasso(proximoPasso));
+                            
+                        } catch (error) {
+                            console.error('Erro ao registrar resposta:', error);
+                            alert('Erro ao registrar resposta. Por favor, tente novamente.');
+                        }
+                    });
+                    
+                    opcoesContainer.appendChild(opcaoItem);
+                });
+                
+                passoContainer.appendChild(template);
+            }
+            
+            // Carrega um passo do tipo informação
+            function carregarPassoInformacao(passo) {
+                const template = templatePassoInformacao.content.cloneNode(true);
+                
+                template.querySelector('.informacao-texto').textContent = passo.texto;
+                
+                // Adiciona evento ao botão de continuar
+                template.querySelector('.continuar-btn').addEventListener('click', function() {
+                    try {
+                        const proximoPasso = simuladorSystem.avancarPasso();
+                        carregarPasso(proximoPasso);
+                    } catch (error) {
+                        console.error('Erro ao avançar passo:', error);
+                        alert('Erro ao avançar para o próximo passo. Por favor, tente novamente.');
+                    }
+                });
+                
+                passoContainer.appendChild(template);
+            }
+            
+            // Mostra o resultado da simulação
+            function mostrarResultado(passo) {
+                // Atualiza os elementos do resultado
+                if (passo.resultado.sucesso) {
+                    resultadoIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+                    resultadoIcon.classList.add('success');
+                    resultadoIcon.classList.remove('failure');
+                    resultadoTitle.textContent = 'Parabéns! Atendimento bem-sucedido';
+                } else {
+                    resultadoIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
+                    resultadoIcon.classList.add('failure');
+                    resultadoIcon.classList.remove('success');
+                    resultadoTitle.textContent = 'Atendimento com falhas';
+                }
+                
+                resultadoMessage.textContent = passo.texto;
+                
+                // Atualiza as estatísticas
+                respostasCorretas.textContent = passo.estatisticas.respostasCorretas;
+                totalRespostas.textContent = passo.estatisticas.totalRespostas;
+                percentualAcerto.textContent = `${Math.round(passo.estatisticas.percentualAcerto)}%`;
+                pontosGanhos.textContent = passo.estatisticas.pontos;
+                
+                // Mostra ou esconde o badge de ticket médio
+                if (passo.estatisticas.aumentouTicket) {
+                    ticketMedioBadge.style.display = 'inline-block';
+                } else {
+                    ticketMedioBadge.style.display = 'none';
+                }
+                
+                // Mostra a tela de resultado
+                simulacaoSelection.style.display = 'none';
+                simulacaoEmAndamento.style.display = 'none';
+                resultadoSimulacao.style.display = 'block';
+            }
+            
+            // Eventos
+            categoriaFilter.addEventListener('change', carregarSimulacoes);
+            publicoFilter.addEventListener('change', carregarSimulacoes);
+            
+            voltarSimulacoesBtn.addEventListener('click', function() {
+                simulacaoSelection.style.display = 'block';
+                simulacaoEmAndamento.style.display = 'none';
+                resultadoSimulacao.style.display = 'none';
+                
+                // Recarrega as simulações e recomendações
+                carregarSimulacoes();
+                carregarRecomendacoes();
+            });
+            
+            novaSimulacaoBtn.addEventListener('click', function() {
+                simulacaoSelection.style.display = 'block';
+                simulacaoEmAndamento.style.display = 'none';
+                resultadoSimulacao.style.display = 'none';
+                
+                // Recarrega as simulações e recomendações
+                carregarSimulacoes();
+                carregarRecomendacoes();
+            });
+            
+            // Inicialização
+            carregarSimulacoes();
+            carregarRecomendacoes();
+            
+            // Verifica se há parâmetros na URL para iniciar uma simulação específica
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('simulacao')) {
+                const simulacaoId = urlParams.get('simulacao');
+                iniciarSimulacao(simulacaoId);
+            }
+        });
+    </script>
+</body>
+</html>

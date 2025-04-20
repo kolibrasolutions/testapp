@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FarmaLearn</title>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="main-content">
+        <!-- Barra lateral -->
+        <div class="sidebar">
+            <div class="sidebar-fixed">
+                <div class="logo-container">
+                    <img src="img/logo.png" alt="FarmaLearn Logo" class="logo" id="logo-placeholder">
+                </div>
+                
+                <div class="user-info">
+                    <div class="user-avatar">JU</div>
+                    <div class="user-details">
+                        <div class="user-name">Juliano</div>
+                        <div class="user-role">Balconista</div>
+                    </div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">
+                            <i class="fas fa-home nav-icon"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="flashcards.html" class="nav-link">
+                            <i class="fas fa-clone nav-icon"></i>
+                            Flashcards
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="simulador.html" class="nav-link">
+                            <i class="fas fa-comments nav-icon"></i>
+                            Simulador
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="estatisticas.html" class="nav-link">
+                            <i class="fas fa-chart-bar nav-icon"></i>
+                            Estatísticas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="conquistas.html" class="nav-link">
+                            <i class="fas fa-trophy nav-icon"></i>
+                            Conquistas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="configuracoes.html" class="nav-link">
+                            <i class="fas fa-cog nav-icon"></i>
+                            Configurações
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Conteúdo principal -->
+        <div class="content">
+            <div class="container">
+                <h1>Dashboard</h1>
+                <p>Bem-vindo ao seu sistema de treinamento gamificado para balconistas de farmácia!</p>
+                
+                <!-- Resumo de progresso -->
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Seu progresso</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="progress-stats">
+                                <div class="progress-item">
+                                    <div class="progress-label">Nível atual</div>
+                                    <div class="progress-value" id="nivel-atual">1</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="progresso-nivel" style="width: 0%;"></div>
+                                    </div>
+                                    <div class="progress-sublabel" id="progresso-texto">0% para o próximo nível</div>
+                                </div>
+                                
+                                <div class="progress-item">
+                                    <div class="progress-label">Flashcards estudados</div>
+                                    <div class="progress-value" id="flashcards-estudados">0</div>
+                                </div>
+                                
+                                <div class="progress-item">
+                                    <div class="progress-label">Simulações completadas</div>
+                                    <div class="progress-value" id="simulacoes-completadas">0</div>
+                                </div>
+                                
+                                <div class="progress-item">
+                                    <div class="progress-label">Precisão geral</div>
+                                    <div class="progress-value" id="precisao-geral">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desafio diário -->
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Desafio diário</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="daily-challenge" id="desafio-container">
+                                <div class="challenge-icon">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <div class="challenge-details">
+                                    <div class="challenge-title" id="desafio-titulo">Carregando desafio...</div>
+                                    <div class="challenge-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="desafio-progresso" style="width: 0%;"></div>
+                                        </div>
+                                        <div class="progress-text" id="desafio-progresso-texto">0/0</div>
+                                    </div>
+                                </div>
+                                <div class="challenge-reward">
+                                    <div class="reward-value" id="desafio-recompensa">+0</div>
+                                    <div class="reward-label">XP</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Atividades recomendadas -->
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Atividades recomendadas</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="recommended-activities" id="atividades-recomendadas">
+                                <!-- Atividades serão carregadas dinamicamente aqui -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Conquistas recentes -->
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Conquistas recentes</h2>
+                            <a href="conquistas.html" class="btn btn-primary">Ver todas</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="achievements" id="conquistas-recentes">
+                                <!-- Conquistas serão carregadas dinamicamente aqui -->
+                                <div class="no-achievements" id="sem-conquistas">
+                                    Você ainda não tem conquistas. Continue estudando para desbloquear!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botão de alternância de tema -->
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <!-- Templates para geração dinâmica de conteúdo -->
+    <template id="template-atividade">
+        <div class="activity-item">
+            <div class="activity-icon">
+                <i class=""></i>
+            </div>
+            <div class="activity-details">
+                <div class="activity-title"></div>
+                <div class="activity-description"></div>
+            </div>
+            <a href="#" class="btn btn-sm btn-outline">Iniciar</a>
+        </div>
+    </template>
+    
+    <template id="template-conquista">
+        <div class="achievement-item">
+            <div class="achievement-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="achievement-details">
+                <div class="achievement-title"></div>
+                <div class="achievement-description"></div>
+                <div class="achievement-date"></div>
+            </div>
+        </div>
+    </template>
+    
+    <!-- Scripts -->
+    <script type="module">
+        import ThemeManager from './js/theme.js';
+        import ProgressTracker from './js/progress.js';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializa o gerenciador de tema
+            const themeManager = new ThemeManager();
+            themeManager.initThemeToggle();
+            
+            // Inicializa o rastreador de progresso
+            const progressTracker = new ProgressTracker();
+            
+            // Gerar logo placeholder se a imagem não existir
+            const logoPlaceholder = document.getElementById('logo-placeholder');
+            logoPlaceholder.onerror = function() {
+                this.onerror = null;
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjYwIiB2aWV3Qm94PSIwIDAgMTUwIDYwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zMCAxMEMyMC41NyAxMCAxMyAxNy41NyAxMyAyN0MxMyAzNi40MyAyMC41NyA0NCAzMCA0NEMzOS40MyA0NCA0NyAzNi40MyA0NyAyN0M0NyAxNy41NyAzOS40MyAxMCAzMCAxMFoiIGZpbGw9IiMxRTg0NDkiLz48cGF0aCBkPSJNMzUgMjBMMjUgMjdMMzUgMzRWMjBaIiBmaWxsPSJ3aGl0ZSIvPjx0ZXh0IHg9IjU1IiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFFODQ0OSI+RmFybWFMZWFybjwvdGV4dD48L3N2Zz4=';
+            };
+            
+            // Atualiza o dashboard com os dados do usuário
+            function atualizarDashboard() {
+                const perfil = progressTracker.getUserProfile();
+                
+                // Atualiza informações de nível e progresso
+                document.getElementById('nivel-atual').textContent = perfil.nivel;
+                document.getElementById('progresso-nivel').style.width = `${perfil.progressoNivel}%`;
+                document.getElementById('progresso-texto').textContent = `${perfil.progressoNivel}% para o próximo nível`;
+                
+                // Atualiza estatísticas
+                document.getElementById('flashcards-estudados').textContent = perfil.estatisticas.flashcards.estudados;
+                document.getElementById('simulacoes-completadas').textContent = perfil.estatisticas.simulacoes.completadas;
+                document.getElementById('precisao-geral').textContent = perfil.estatisticas.flashcards.precisaoGeral + '%';
+                
+                // Atualiza desafio diário
+                const desafio = perfil.desafiosDiarios.atual;
+                if (desafio) {
+                    document.getElementById('desafio-titulo').textContent = desafio.descricao;
+                    const progresso = Math.min(100, (desafio.progresso / desafio.quantidade) * 100);
+                    document.getElementById('desafio-progresso').style.width = `${progresso}%`;
+                    document.getElementById('desafio-progresso-texto').textContent = `${desafio.progresso}/${desafio.quantidade}`;
+                    document.getElementById('desafio-recompensa').textContent = `+${desafio.recompensaXP}`;
+                    
+                    if (desafio.concluido) {
+                        document.getElementById('desafio-container').classList.add('completed');
+                    }
+                }
+                
+                // Atualiza atividades recomendadas
+                const recomendacoes = progressTracker.getRecomendacoesPersonalizadas();
+                const atividadesContainer = document.getElementById('atividades-recomendadas');
+                atividadesContainer.innerHTML = '';
+                
+                // Adiciona recomendações de flashcards
+                if (recomendacoes.flashcardsRecomendados.length > 0) {
+                    const template = document.getElementById('template-atividade').content.cloneNode(true);
+                    template.querySelector('.activity-icon i').className = 'fas fa-clone';
+                    template.querySelector('.activity-title').textContent = 'Revisar flashcards';
+                    template.querySelector('.activity-description').textContent = 'Você tem flashcards pendentes para revisão';
+                    template.querySelector('a').href = 'flashcards.html';
+                    atividadesContainer.appendChild(template);
+                }
+                
+                // Adiciona recomendações de simulações
+                if (recomendacoes.simulacoesRecomendadas.length > 0) {
+                    const simulacao = recomendacoes.simulacoesRecomendadas[0];
+                    const template = document.getElementById('template-atividade').content.cloneNode(true);
+                    template.querySelector('.activity-icon i').className = 'fas fa-comments';
+                    template.querySelector('.activity-title').textContent = 'Praticar simulação';
+                    template.querySelector('.activity-description').textContent = simulacao.titulo;
+                    template.querySelector('a').href = `simulador.html?simulacao=${simulacao.id}`;
+                    atividadesContainer.appendChild(template);
+                }
+                
+                // Adiciona próximos passos
+                recomendacoes.proximosPassos.forEach(passo => {
+                    const template = document.getElementById('template-atividade').content.cloneNode(true);
+                    
+                    let icone = 'fas fa-tasks';
+                    let link = '#';
+                    
+                    if (passo.tipo === 'flashcards') {
+                        icone = 'fas fa-clone';
+                        link = 'flashcards.html';
+                    } else if (passo.tipo === 'simulacao') {
+                        icone = 'fas fa-comments';
+                        link = 'simulador.html';
+                    } else if (passo.tipo === 'estudo') {
+                        icone = 'fas fa-book';
+                        link = 'flashcards.html';
+                    }
+                    
+                    template.querySelector('.activity-icon i').className = icone;
+                    template.querySelector('.activity-title').textContent = 'Recomendação';
+                    template.querySelector('.activity-description').textContent = passo.descricao;
+                    template.querySelector('a').href = link;
+                    atividadesContainer.appendChild(template);
+                });
+                
+                // Se não houver recomendações, exibe mensagem
+                if (atividadesContainer.children.length === 0) {
+                    atividadesContainer.innerHTML = '<p>Nenhuma atividade recomendada no momento.</p>';
+                }
+                
+                // Atualiza conquistas recentes
+                const conquistasContainer = document.getElementById('conquistas-recentes');
+                const semConquistas = document.getElementById('sem-conquistas');
+                
+                if (perfil.conquistasRecentes.length > 0) {
+                    semConquistas.style.display = 'none';
+                    
+                    perfil.conquistasRecentes.forEach(conquista => {
+                        const template = document.getElementById('template-conquista').content.cloneNode(true);
+                        template.querySelector('.achievement-title').textContent = conquista.nome;
+                        template.querySelector('.achievement-description').textContent = conquista.descricao;
+                        
+                        // Formata a data
+                        const data = new Date(conquista.data);
+                        const dataFormatada = data.toLocaleDateString('pt-BR');
+                        template.querySelector('.achievement-date').textContent = `Conquistado em ${dataFormatada}`;
+                        
+                        conquistasContainer.appendChild(template);
+                    });
+                } else {
+                    semConquistas.style.display = 'block';
+                }
+            }
+            
+            // Inicializa o dashboard
+            atualizarDashboard();
+        });
+    </script>
+</body>
+</html>
