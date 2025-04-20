@@ -13,6 +13,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <!-- CSS Personalizado -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/mobile.css">
@@ -159,17 +162,17 @@
                 </div>
                 <div class="stats-card">
                     <div class="stats-label">Progresso Geral</div>
-                    <div class="stats-value">35%</div>
+                    <div class="stats-value">0%</div>
                     <div class="stats-change positive">
-                        <i class="fas fa-arrow-up"></i> 5% desde ontem
+                        <i class="fas fa-info-circle"></i> Comece a estudar hoje!
                     </div>
                     <div class="progress-container">
                         <div class="progress-info">
-                            <span class="progress-label">Nível 2</span>
-                            <span class="progress-percentage">35%</span>
+                            <span class="progress-label">Nível 1</span>
+                            <span class="progress-percentage">0%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-value primary" style="width: 35%"></div>
+                            <div class="progress-value primary" style="width: 0%"></div>
                         </div>
                     </div>
                 </div>
@@ -182,17 +185,17 @@
                 </div>
                 <div class="stats-card">
                     <div class="stats-label">Flashcards Estudados</div>
-                    <div class="stats-value">42</div>
+                    <div class="stats-value">0</div>
                     <div class="stats-change positive">
-                        <i class="fas fa-arrow-up"></i> 12 novos hoje
+                        <i class="fas fa-info-circle"></i> Nenhum estudado hoje
                     </div>
                     <div class="progress-container">
                         <div class="progress-info">
                             <span class="progress-label">Meta Diária</span>
-                            <span class="progress-percentage">84%</span>
+                            <span class="progress-percentage">0%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-value accent" style="width: 84%"></div>
+                            <div class="progress-value accent" style="width: 0%"></div>
                         </div>
                     </div>
                 </div>
@@ -205,17 +208,17 @@
                 </div>
                 <div class="stats-card">
                     <div class="stats-label">Simulações Completadas</div>
-                    <div class="stats-value">8</div>
+                    <div class="stats-value">0</div>
                     <div class="stats-change positive">
-                        <i class="fas fa-arrow-up"></i> 2 novas hoje
+                        <i class="fas fa-info-circle"></i> Nenhuma hoje
                     </div>
                     <div class="progress-container">
                         <div class="progress-info">
                             <span class="progress-label">Taxa de Acerto</span>
-                            <span class="progress-percentage">75%</span>
+                            <span class="progress-percentage">0%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-value success" style="width: 75%"></div>
+                            <div class="progress-value success" style="width: 0%"></div>
                         </div>
                     </div>
                 </div>
@@ -228,17 +231,17 @@
                 </div>
                 <div class="stats-card">
                     <div class="stats-label">Sequência de Dias</div>
-                    <div class="stats-value">3</div>
+                    <div class="stats-value">0</div>
                     <div class="stats-change">
-                        <i class="fas fa-calendar-check"></i> Mantenha o ritmo!
+                        <i class="fas fa-calendar-check"></i> Comece hoje!
                     </div>
                     <div class="progress-container">
                         <div class="progress-info">
                             <span class="progress-label">Recorde Pessoal</span>
-                            <span class="progress-percentage">50%</span>
+                            <span class="progress-percentage">0%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-value warning" style="width: 50%"></div>
+                            <div class="progress-value warning" style="width: 0%"></div>
                         </div>
                     </div>
                 </div>
@@ -285,45 +288,9 @@
                     </div>
                 </div>
                 <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="activity-icon primary">
-                            <i class="fas fa-clone"></i>
-                        </div>
-                        <div class="activity-content">
-                            <div class="activity-title">Completou 12 flashcards</div>
-                            <div class="activity-subtitle">Categoria: Problemas Respiratórios</div>
-                        </div>
-                        <div class="activity-time">Hoje, 10:30</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon accent">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="activity-content">
-                            <div class="activity-title">Simulação concluída com sucesso</div>
-                            <div class="activity-subtitle">Cenário: Atendimento para Dor de Cabeça</div>
-                        </div>
-                        <div class="activity-time">Hoje, 09:15</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon success">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div class="activity-content">
-                            <div class="activity-title">Conquista desbloqueada</div>
-                            <div class="activity-subtitle">Especialista em Problemas Digestivos</div>
-                        </div>
-                        <div class="activity-time">Ontem, 16:45</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon warning">
-                            <i class="fas fa-fire"></i>
-                        </div>
-                        <div class="activity-content">
-                            <div class="activity-title">Sequência de 3 dias</div>
-                            <div class="activity-subtitle">Continue estudando para aumentar sua sequência!</div>
-                        </div>
-                        <div class="activity-time">Hoje, 00:01</div>
+                    <div class="no-activity-message">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Nenhuma atividade recente. Comece a estudar!</p>
                     </div>
                 </div>
             </div>
@@ -345,7 +312,7 @@
                         </div>
                         <div class="quick-action-content">
                             <div class="quick-action-title">Estudar 15 flashcards</div>
-                            <div class="quick-action-subtitle">Progresso: 12/15</div>
+                            <div class="quick-action-subtitle">Progresso: 0/15</div>
                         </div>
                     </div>
                     <div class="quick-action">
@@ -353,26 +320,26 @@
                             <i class="fas fa-comments"></i>
                         </div>
                         <div class="quick-action-content">
-                            <div class="quick-action-title">Completar 3 simulações</div>
-                            <div class="quick-action-subtitle">Progresso: 2/3</div>
+                            <div class="quick-action-title">Completar 1 simulação</div>
+                            <div class="quick-action-subtitle">Progresso: 0/1</div>
                         </div>
                     </div>
                     <div class="quick-action">
                         <div class="quick-action-icon success">
-                            <i class="fas fa-th-large"></i>
+                            <i class="fas fa-award"></i>
                         </div>
                         <div class="quick-action-content">
-                            <div class="quick-action-title">Estudar categoria Digestivos</div>
-                            <div class="quick-action-subtitle">Não iniciado</div>
+                            <div class="quick-action-title">Conquistar 1 troféu</div>
+                            <div class="quick-action-subtitle">Progresso: 0/1</div>
                         </div>
                     </div>
                     <div class="quick-action">
                         <div class="quick-action-icon warning">
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-fire"></i>
                         </div>
                         <div class="quick-action-content">
-                            <div class="quick-action-title">Revisar flashcards difíceis</div>
-                            <div class="quick-action-subtitle">Não iniciado</div>
+                            <div class="quick-action-title">Manter sequência de dias</div>
+                            <div class="quick-action-subtitle">Estude hoje!</div>
                         </div>
                     </div>
                 </div>
@@ -380,200 +347,7 @@
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="module">
-        import LoginSystem from './js/login.js';
-        import ThemeManager from './js/theme.js';
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inicializar sistema de login
-            const loginSystem = new LoginSystem();
-            loginSystem.requireLogin();
-            loginSystem.updateUserInterface();
-            
-            // Inicializar gerenciador de tema
-            const themeManager = new ThemeManager();
-            themeManager.initThemeToggle();
-            
-            // Toggle da sidebar
-            const sidebarToggle = document.getElementById('sidebar-toggle');
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
-            
-            sidebarToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('collapsed');
-            });
-            
-            // Toggle do menu mobile
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            
-            mobileMenuToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-            });
-            
-            // Submenu toggle
-            const menuItemsWithSubmenu = document.querySelectorAll('.menu-item[data-toggle]');
-            
-            menuItemsWithSubmenu.forEach(item => {
-                item.addEventListener('click', function() {
-                    const submenuId = this.getAttribute('data-toggle');
-                    const submenu = document.getElementById(submenuId);
-                    
-                    this.classList.toggle('expanded');
-                });
-            });
-            
-            // Navegação
-            const menuItems = document.querySelectorAll('.menu-item[data-page], .mobile-nav-item[data-page]');
-            
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const page = this.getAttribute('data-page');
-                    
-                    if (page === 'flashcards') {
-                        window.location.href = 'flashcards.html';
-                    } else if (page === 'simulator') {
-                        window.location.href = 'simulador.html';
-                    }
-                    
-                    // Atualizar item ativo
-                    document.querySelectorAll('.menu-item, .mobile-nav-item').forEach(el => {
-                        el.classList.remove('active');
-                    });
-                    
-                    document.querySelectorAll(`.menu-item[data-page="${page}"], .mobile-nav-item[data-page="${page}"]`).forEach(el => {
-                        el.classList.add('active');
-                    });
-                });
-            });
-            
-            // Logout
-            const logoutBtn = document.getElementById('logout-btn');
-            
-            logoutBtn.addEventListener('click', function() {
-                loginSystem.logout();
-            });
-            
-            // Inicializar gráficos
-            const categoriasCtx = document.getElementById('categoriasChart').getContext('2d');
-            const progressoCtx = document.getElementById('progressoChart').getContext('2d');
-            
-            // Gráfico de categorias
-            new Chart(categoriasCtx, {
-                type: 'radar',
-                data: {
-                    labels: ['Respiratórios', 'Dermatológicos', 'Digestivos', 'Dores', 'Outros'],
-                    datasets: [{
-                        label: 'Domínio por Categoria',
-                        data: [75, 60, 85, 40, 30],
-                        backgroundColor: 'rgba(30, 132, 73, 0.2)',
-                        borderColor: 'rgba(30, 132, 73, 1)',
-                        borderWidth: 2,
-                        pointBackgroundColor: 'rgba(30, 132, 73, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(30, 132, 73, 1)'
-                    }]
-                },
-                options: {
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                display: false
-                            },
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            angleLines: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            pointLabels: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                font: {
-                                    family: 'Poppins'
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
-            
-            // Gráfico de progresso
-            new Chart(progressoCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                    datasets: [{
-                        label: 'Flashcards Estudados',
-                        data: [5, 12, 8, 15, 10, 20, 12],
-                        backgroundColor: 'rgba(30, 132, 73, 0.2)',
-                        borderColor: 'rgba(30, 132, 73, 1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }, {
-                        label: 'Simulações Completadas',
-                        data: [1, 2, 1, 3, 0, 2, 2],
-                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
-                        borderColor: 'rgba(52, 152, 219, 1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                font: {
-                                    family: 'Poppins'
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                font: {
-                                    family: 'Poppins'
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                font: {
-                                    family: 'Poppins'
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Gerar logo placeholder se a imagem não existir
-            const logoPlaceholder = document.getElementById('logo-placeholder');
-            logoPlaceholder.onerror = function() {
-                this.onerror = null;
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNDAgMTBDMjMuNDMgMTAgMTAgMjMuNDMgMTAgNDBDMTAgNTYuNTcgMjMuNDMgNzAgNDAgNzBDNTYuNTcgNzAgNzAgNTYuNTcgNzAgNDBDNzAgMjMuNDMgNTYuNTcgMTAgNDAgMTBaIiBmaWxsPSIjMUU4NDQ5Ii8+PHBhdGggZD0iTTUwIDI1TDMwIDQwTDUwIDU1VjI1WiIgZmlsbD0iIzM0OThEQiIvPjwvc3ZnPg==';
-            };
-        });
-    </script>
+    <!-- Scripts -->
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
