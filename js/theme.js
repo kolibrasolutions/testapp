@@ -1,86 +1,94 @@
 /**
- * Theme Manager for FarmaLearn
- * Handles dark/light theme switching and UI preferences
+ * Gerenciador de tema (claro/escuro) para o sistema de treinamento
  */
 
 class ThemeManager {
   constructor() {
-    this.storageKey = 'farmalearn_theme';
-    this.defaultTheme = 'dark';
-    this.currentTheme = this.loadThemePreference();
+    this.themeKey = 'preferred_theme';
+    this.defaultTheme = 'light';
+    this.initTheme();
+  }
+
+  /**
+   * Inicializa o tema com base na preferência salva ou configuração do sistema
+   */
+  initTheme() {
+    // Verifica se há uma preferência salva
+    const savedTheme = localStorage.getItem(this.themeKey);
     
-    // Apply theme on initialization
-    this.applyTheme(this.currentTheme);
+    if (savedTheme) {
+      this.setTheme(savedTheme);
+    } else {
+      // Verifica preferência do sistema
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      if (prefersDarkScheme.matches) {
+        this.setTheme('dark');
+      } else {
+        this.setTheme(this.defaultTheme);
+      }
+    }
+    
+    // Adiciona listener para mudanças na preferência do sistema
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!localStorage.getItem(this.themeKey)) {
+        this.setTheme(e.matches ? 'dark' : 'light');
+      }
+    });
   }
-  
+
   /**
-   * Load theme preference from localStorage
-   * @returns {string} Current theme ('dark' or 'light')
+   * Define o tema atual
+   * @param {string} theme - 'light' ou 'dark'
    */
-  loadThemePreference() {
-    return localStorage.getItem(this.storageKey) || this.defaultTheme;
+  setTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    
+    localStorage.setItem(this.themeKey, theme);
+    this.updateThemeToggleIcon(theme);
   }
-  
+
   /**
-   * Save theme preference to localStorage
-   * @param {string} theme - Theme to save ('dark' or 'light')
-   */
-  saveThemePreference(theme) {
-    localStorage.setItem(this.storageKey, theme);
-  }
-  
-  /**
-   * Toggle between dark and light themes
+   * Alterna entre os temas claro e escuro
    */
   toggleTheme() {
-    const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
-    this.applyTheme(newTheme);
-    this.saveThemePreference(newTheme);
-    this.currentTheme = newTheme;
-  }
-  
-  /**
-   * Apply specified theme to document
-   * @param {string} theme - Theme to apply ('dark' or 'light')
-   */
-  applyTheme(theme) {
-    document.body.classList.remove('theme-dark', 'theme-light');
-    document.body.classList.add(`theme-${theme}`);
+    const currentTheme = localStorage.getItem(this.themeKey) || this.defaultTheme;
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     
-    // Update theme toggle icon
-    const themeToggleIcons = document.querySelectorAll('.theme-toggle i');
-    themeToggleIcons.forEach(icon => {
-      if (theme === 'dark') {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
-    });
+    this.setTheme(newTheme);
   }
-  
+
   /**
-   * Initialize theme toggle buttons
+   * Atualiza o ícone do botão de alternância de tema
+   * @param {string} theme - Tema atual
+   */
+  updateThemeToggleIcon(theme) {
+    const themeToggle = document.querySelector('.theme-toggle i');
+    if (themeToggle) {
+      if (theme === 'dark') {
+        themeToggle.className = 'fas fa-sun';
+      } else {
+        themeToggle.className = 'fas fa-moon';
+      }
+    }
+  }
+
+  /**
+   * Inicializa o botão de alternância de tema
    */
   initThemeToggle() {
-    const themeToggles = document.querySelectorAll('.theme-toggle');
-    
-    themeToggles.forEach(toggle => {
-      toggle.addEventListener('click', () => this.toggleTheme());
-    });
-    
-    // Set initial icon state
-    const themeToggleIcons = document.querySelectorAll('.theme-toggle i');
-    themeToggleIcons.forEach(icon => {
-      if (this.currentTheme === 'dark') {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
-    });
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => this.toggleTheme());
+      
+      // Atualiza o ícone inicial
+      const currentTheme = localStorage.getItem(this.themeKey) || this.defaultTheme;
+      this.updateThemeToggleIcon(currentTheme);
+    }
   }
 }
 
