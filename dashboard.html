@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Kolibra Solutions</title>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Mobile Menu Toggle (visible only on small screens) -->
+    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="img/logo.png" alt="Kolibra Solutions Logo" id="logo-placeholder">
+                <h1>KOLIBRA</h1>
+            </div>
+            <div class="sidebar-toggle" id="sidebar-toggle">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item active" data-page="dashboard">
+                <div class="menu-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="menu-text">Dashboard</div>
+            </div>
+            
+            <div class="menu-item" data-toggle="vendas-submenu">
+                <div class="menu-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="menu-text">Vendas</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="vendas-submenu">
+                <div class="submenu-item" data-page="registro-vendas">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Registro de Vendas</div>
+                </div>
+                <div class="submenu-item" data-page="metas">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Acompanhamento de Metas</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Análise por Serviço</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="clientes-submenu">
+                <div class="menu-icon"><i class="fas fa-users"></i></div>
+                <div class="menu-text">Clientes</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="clientes-submenu">
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Lista de Clientes</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Segmentação</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Projetos Ativos</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="servicos-submenu">
+                <div class="menu-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="menu-text">Serviços</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="servicos-submenu">
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Catálogo de Serviços</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Preços e Margens</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="marketing-submenu">
+                <div class="menu-icon"><i class="fas fa-bullhorn"></i></div>
+                <div class="menu-text">Marketing</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="marketing-submenu">
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Calendário de Conteúdo</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Desempenho de Canais</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="financas-submenu">
+                <div class="menu-icon"><i class="fas fa-wallet"></i></div>
+                <div class="menu-text">Finanças</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="financas-submenu">
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Receitas e Despesas</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Projeções</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="config-submenu">
+                <div class="menu-icon"><i class="fas fa-cog"></i></div>
+                <div class="menu-text">Configurações</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="config-submenu">
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Perfil</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Usuários</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Preferências</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">A</div>
+                <div class="user-details">
+                    <div class="user-name" id="user-name">Admin</div>
+                    <div class="user-role">Administrador</div>
+                </div>
+            </div>
+            <div class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <div class="header">
+            <h1 class="page-title">Dashboard</h1>
+            <div class="header-actions">
+                <div class="header-action">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="header-action">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="header-action">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Receita Mensal -->
+            <div class="card card-sm">
+                <div class="stats-icon primary">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-label">Receita Mensal</div>
+                    <div class="stats-value">R$ 0</div>
+                    <div class="stats-change">
+                        <i class="fas fa-minus"></i> Sem dados anteriores
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-label">Meta Mensal</span>
+                            <span class="progress-percentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-value primary" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Vendas Totais -->
+            <div class="card card-sm">
+                <div class="stats-icon accent">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-label">Vendas Totais</div>
+                    <div class="stats-value">0</div>
+                    <div class="stats-change">
+                        <i class="fas fa-minus"></i> Sem dados anteriores
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-label">Meta Mensal</span>
+                            <span class="progress-percentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-value accent" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clientes Ativos -->
+            <div class="card card-sm">
+                <div class="stats-icon success">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-label">Clientes Ativos</div>
+                    <div class="stats-value">0</div>
+                    <div class="stats-change">
+                        <i class="fas fa-minus"></i> Sem dados anteriores
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-label">Retenção</span>
+                            <span class="progress-percentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-value success" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projetos em Andamento -->
+            <div class="card card-sm">
+                <div class="stats-icon warning">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-label">Projetos em Andamento</div>
+                    <div class="stats-value">0</div>
+                    <div class="stats-change">
+                        <i class="fas fa-minus"></i> Sem dados anteriores
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-label">Conclusão</span>
+                            <span class="progress-percentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-value warning" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico de Vendas por Serviço -->
+            <div class="card card-md">
+                <div class="card-header">
+                    <h3 class="card-title">Vendas por Serviço</h3>
+                    <div class="card-actions">
+                        <div class="card-action">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="servicosChart"></canvas>
+                    <div class="no-data-message">
+                        <i class="fas fa-chart-pie"></i>
+                        <p>Sem dados de vendas disponíveis</p>
+                        <a href="registro-vendas.html" class="btn btn-primary btn-sm">Registrar Vendas</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico de Vendas por Segmento -->
+            <div class="card card-md">
+                <div class="card-header">
+                    <h3 class="card-title">Vendas por Segmento</h3>
+                    <div class="card-actions">
+                        <div class="card-action">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="segmentosChart"></canvas>
+                    <div class="no-data-message">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Sem dados de vendas disponíveis</p>
+                        <a href="registro-vendas.html" class="btn btn-primary btn-sm">Registrar Vendas</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Atividades Recentes -->
+            <div class="card card-md">
+                <div class="card-header">
+                    <h3 class="card-title">Atividades Recentes</h3>
+                    <div class="card-actions">
+                        <div class="card-action">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-list">
+                    <div class="no-data-message">
+                        <i class="fas fa-history"></i>
+                        <p>Nenhuma atividade recente</p>
+                        <a href="registro-vendas.html" class="btn btn-primary btn-sm">Iniciar Atividades</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ações Rápidas -->
+            <div class="card card-md">
+                <div class="card-header">
+                    <h3 class="card-title">Ações Rápidas</h3>
+                    <div class="card-actions">
+                        <div class="card-action">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <div class="quick-action" data-page="registro-vendas">
+                        <div class="quick-action-icon primary">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="quick-action-content">
+                            <div class="quick-action-title">Nova Venda</div>
+                            <div class="quick-action-subtitle">Registrar uma nova venda</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-action">
+                        <div class="quick-action-icon accent">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="quick-action-content">
+                            <div class="quick-action-title">Novo Cliente</div>
+                            <div class="quick-action-subtitle">Adicionar um novo cliente</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-action">
+                        <div class="quick-action-icon success">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="quick-action-content">
+                            <div class="quick-action-title">Projetos</div>
+                            <div class="quick-action-subtitle">Gerenciar projetos ativos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-action" data-page="metas">
+                        <div class="quick-action-icon warning">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="quick-action-content">
+                            <div class="quick-action-title">Metas</div>
+                            <div class="quick-action-subtitle">Acompanhar metas mensais</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico de Evolução Mensal -->
+            <div class="card card-xl">
+                <div class="card-header">
+                    <h3 class="card-title">Evolução Mensal de Vendas</h3>
+                    <div class="card-actions">
+                        <div class="card-action">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div class="card-action">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="evolucaoMensalChart"></canvas>
+                    <div class="no-data-message">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Sem dados de vendas disponíveis</p>
+                        <a href="registro-vendas.html" class="btn btn-primary btn-sm">Registrar Vendas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mensagem de Funcionalidades em Desenvolvimento -->
+        <div class="alert alert-info mt-4" id="funcionalidades-info" style="display: none;">
+            <i class="fas fa-info-circle mr-2"></i>
+            <span>Algumas funcionalidades do menu estão em desenvolvimento e serão implementadas em breve.</span>
+            <button class="btn btn-sm btn-secondary ml-3" onclick="document.getElementById('funcionalidades-info').style.display = 'none';">
+                Entendi
+            </button>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/dashboard-charts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar gráficos do dashboard
+            initDashboardCharts();
+            // Verificar autenticação
+            if (!localStorage.getItem('kolibra_logged_in') && !sessionStorage.getItem('kolibra_logged_in')) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Definir nome do usuário
+            const username = localStorage.getItem('kolibra_username') || sessionStorage.getItem('kolibra_username') || 'Admin';
+            document.getElementById('user-name').textContent = username;
+            document.getElementById('user-avatar').textContent = username.charAt(0).toUpperCase();
+            
+            // Toggle Sidebar
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const mainContent = document.getElementById('main-content');
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+            });
+            
+            // Mobile Menu Toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('mobile-open');
+                });
+            }
+            
+            // Submenu Toggle
+            const menuItems = document.querySelectorAll('.menu-item[data-toggle]');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const submenuId = this.getAttribute('data-toggle');
+                    this.classList.toggle('expanded');
+                });
+            });
+            
+            // Logout
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            logoutBtn.addEventListener('click', function() {
+                localStorage.removeItem('kolibra_logged_in');
+                localStorage.removeItem('kolibra_username');
+                sessionStorage.removeItem('kolibra_logged_in');
+                sessionStorage.removeItem('kolibra_username');
+                window.location.href = 'login.html';
+            });
+            
+            // Gerar logo placeholder se a imagem não existir
+            const logoPlaceholder = document.getElementById('logo-placeholder');
+            logoPlaceholder.onerror = function() {
+                this.onerror = null;
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNDAgMTBDMjMuNDMgMTAgMTAgMjMuNDMgMTAgNDBDMTAgNTYuNTcgMjMuNDMgNzAgNDAgNzBDNTYuNTcgNzAgNzAgNTYuNTcgNzAgNDBDNzAgMjMuNDMgNTYuNTcgMTAgNDAgMTBaIiBmaWxsPSIjMDA0NDk0Ii8+PHBhdGggZD0iTTUwIDI1TDMwIDQwTDUwIDU1VjI1WiIgZmlsbD0iI0ZGN0YwMCIvPjwvc3ZnPg==';
+            };
+            
+            // Mostrar mensagem de funcionalidades em desenvolvimento
+            document.getElementById('funcionalidades-info').style.display = 'flex';
+            
+            // Navegação entre páginas
+            document.querySelectorAll('.menu-item, .submenu-item, .quick-action').forEach(item => {
+                if (item.dataset.page) {
+                    item.addEventListener('click', function() {
+                        const page = this.dataset.page;
+                        if (page === 'dashboard') {
+                            window.location.href = 'dashboard.html';
+                        } else if (page === 'registro-vendas') {
+                            window.location.href = 'registro-vendas.html';
+                        } else if (page === 'metas') {
+                            window.location.href = 'metas.html';
+                        } else {
+                            // Mostrar mensagem para páginas não implementadas
+                            alert('Esta funcionalidade está em desenvolvimento e será implementada em breve.');
+                        }
+                    });
+                } else {
+                    // Adicionar alerta para itens de menu sem página definida
+                    item.addEventListener('click', function(e) {
+                        if (!this.classList.contains('menu-item') || !this.hasAttribute('data-toggle')) {
+                            alert('Esta funcionalidade está em desenvolvimento e será implementada em breve.');
+                        }
+                    });
+                }
+            });
+            
+            // Estilo para mensagens de sem dados
+            const style = document.createElement('style');
+            style.textContent = `
+                .no-data-message {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100%;
+                    min-height: 200px;
+                    color: rgba(255, 255, 255, 0.5);
+                    text-align: center;
+                    padding: 20px;
+                }
+                
+                .no-data-message i {
+                    font-size: 3rem;
+                    margin-bottom: 15px;
+                    opacity: 0.3;
+                }
+                
+                .no-data-message p {
+                    margin-bottom: 15px;
+                    font-size: 1rem;
+                }
+                
+                .chart-container {
+                    position: relative;
+                    width: 100%;
+                    height: 300px;
+                }
+                
+                .chart-container canvas {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1;
+                    opacity: 0.1;
+                }
+                
+                .chart-container .no-data-message {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 2;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Inicializar gráficos vazios
+            const servicosCtx = document.getElementById('servicosChart').getContext('2d');
+            const servicosChart = new Chart(servicosCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sites', 'Branding', 'Kits Segmentados', 'Suporte Mensal'],
+                    datasets: [{
+                        data: [0, 0, 0, 0],
+                        backgroundColor: [
+                            '#004494',
+                            '#FF7F00',
+                            '#4CAF50',
+                            '#2196F3'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                padding: 20,
+                                font: {
+                                    family: "'Poppins', sans-serif",
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(30, 30, 30, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: 'rgba(255, 255, 255, 0.8)',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            titleFont: {
+                                family: "'Poppins', sans-serif",
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                family: "'Poppins', sans-serif",
+                                size: 13
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const segmentosCtx = document.getElementById('segmentosChart').getContext('2d');
+            const segmentosChart = new Chart(segmentosCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Beleza', 'Bem-estar', 'Serviços', 'Gastronomia'],
+                    datasets: [{
+                        label: 'Vendas por Segmento',
+                        data: [0, 0, 0, 0],
+                        backgroundColor: [
+                            'rgba(0, 68, 148, 0.7)',
+                            'rgba(255, 127, 0, 0.7)',
+                            'rgba(76, 175, 80, 0.7)',
+                            'rgba(33, 150, 243, 0.7)'
+                        ],
+                        borderWidth: 0,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(30, 30, 30, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: 'rgba(255, 255, 255, 0.8)',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            titleFont: {
+                                family: "'Poppins', sans-serif",
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                family: "'Poppins', sans-serif",
+                                size: 13
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                font: {
+                                    family: "'Poppins', sans-serif"
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                font: {
+                                    family: "'Poppins', sans-serif"
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const evolucaoMensalCtx = document.getElementById('evolucaoMensalChart').getContext('2d');
+            const evolucaoMensalChart = new Chart(evolucaoMensalCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    datasets: [
+                        {
+                            label: 'Receita Mensal',
+                            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                            borderColor: '#004494',
+                            backgroundColor: 'rgba(0, 68, 148, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Meta Mensal',
+                            data: [1500, 3000, 4500, 6000, 7500, 9000, 10500, 12000, 13500, 14400, 14400, 14400],
+                            borderColor: 'rgba(255, 127, 0, 0.7)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            tension: 0.4,
+                            fill: false,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                font: {
+                                    family: "'Poppins', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(30, 30, 30, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: 'rgba(255, 255, 255, 0.8)',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            titleFont: {
+                                family: "'Poppins', sans-serif",
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                family: "'Poppins', sans-serif",
+                                size: 13
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += 'R$ ' + context.parsed.y.toLocaleString('pt-BR');
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                font: {
+                                    family: "'Poppins', sans-serif"
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                font: {
+                                    family: "'Poppins', sans-serif"
+                                },
+                                callback: function(value) {
+                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

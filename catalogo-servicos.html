@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Serviços - Kolibra Solutions</title>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Mobile Menu Toggle (visible only on small screens) -->
+    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="img/logo.png" alt="Kolibra Solutions Logo" id="logo-placeholder">
+                <h1>KOLIBRA</h1>
+            </div>
+            <div class="sidebar-toggle" id="sidebar-toggle">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item" data-page="dashboard">
+                <div class="menu-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="menu-text">Dashboard</div>
+            </div>
+            
+            <div class="menu-item" data-toggle="vendas-submenu">
+                <div class="menu-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="menu-text">Vendas</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="vendas-submenu">
+                <div class="submenu-item" data-page="registro-vendas">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Registro de Vendas</div>
+                </div>
+                <div class="submenu-item" data-page="metas">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Acompanhamento de Metas</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Análise por Serviço</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="clientes-submenu">
+                <div class="menu-icon"><i class="fas fa-users"></i></div>
+                <div class="menu-text">Clientes</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="clientes-submenu">
+                <div class="submenu-item" data-page="lista-clientes">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Lista de Clientes</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Segmentação</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Projetos Ativos</div>
+                </div>
+            </div>
+            
+            <div class="menu-item expanded" data-toggle="servicos-submenu">
+                <div class="menu-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="menu-text">Serviços</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="servicos-submenu">
+                <div class="submenu-item active" data-page="catalogo-servicos">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Catálogo de Serviços</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Preços e Margens</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="marketing-submenu">
+                <div class="menu-icon"><i class="fas fa-bullhorn"></i></div>
+                <div class="menu-text">Marketing</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="marketing-submenu">
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Calendário de Conteúdo</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Desempenho de Canais</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="financas-submenu">
+                <div class="menu-icon"><i class="fas fa-wallet"></i></div>
+                <div class="menu-text">Finanças</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="financas-submenu">
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Receitas e Despesas</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Projeções</div>
+                </div>
+            </div>
+            
+            <div class="menu-item" data-toggle="config-submenu">
+                <div class="menu-icon"><i class="fas fa-cog"></i></div>
+                <div class="menu-text">Configurações</div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="submenu" id="config-submenu">
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Perfil</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Usuários</div>
+                </div>
+                <div class="submenu-item">
+                    <div class="submenu-icon"><i class="fas fa-circle"></i></div>
+                    <div class="submenu-text">Preferências</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">A</div>
+                <div class="user-details">
+                    <div class="user-name" id="user-name">Admin</div>
+                    <div class="user-role">Administrador</div>
+                </div>
+            </div>
+            <div class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <div class="header">
+            <h1 class="page-title">Catálogo de Serviços</h1>
+            <div class="header-actions">
+                <div class="header-action">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="header-action">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="header-action">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Novo Serviço -->
+        <div class="card card-xl">
+            <div class="card-header">
+                <h3 class="card-title">Novo Serviço</h3>
+                <div class="card-actions">
+                    <div class="card-action">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form-container">
+                <form id="servicoForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nomeServico">Nome do Serviço</label>
+                            <input type="text" id="nomeServico" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoriaServico">Categoria</label>
+                            <select id="categoriaServico" required>
+                                <option value="">Selecione uma categoria</option>
+                                <option value="Consultoria">Consultoria</option>
+                                <option value="Desenvolvimento">Desenvolvimento</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Design">Design</option>
+                                <option value="Suporte">Suporte</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="valorServico">Valor Base (R$)</label>
+                            <input type="number" id="valorServico" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="duracaoServico">Duração Estimada (horas)</label>
+                            <input type="number" id="duracaoServico" min="1" step="1" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="descricaoServico">Descrição</label>
+                            <textarea id="descricaoServico" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="limparServicoBtn">Limpar</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar Serviço</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Lista de Serviços -->
+        <div class="card card-xl">
+            <div class="card-header">
+                <h3 class="card-title">Serviços Cadastrados</h3>
+                <div class="card-actions">
+                    <div class="card-action">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Valor Base</th>
+                            <th>Duração</th>
+                            <th>Vendas</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servicosTableBody">
+                        <!-- Dados de serviços serão inseridos aqui via JavaScript -->
+                    </tbody>
+                </table>
+                <div id="noServicosMessage" class="no-data-message">
+                    <i class="fas fa-briefcase"></i>
+                    <p>Nenhum serviço cadastrado</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Serviços em Cards -->
+        <div class="card card-xl">
+            <div class="card-header">
+                <h3 class="card-title">Visualização em Cards</h3>
+                <div class="card-actions">
+                    <div class="card-action">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="servicos-grid" id="servicosGrid">
+                <!-- Cards de serviços serão inseridos aqui via JavaScript -->
+                <div id="noServicosGridMessage" class="no-data-message">
+                    <i class="fas fa-briefcase"></i>
+                    <p>Nenhum serviço cadastrado</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS Adicional para a página de serviços -->
+    <style>
+        .form-container {
+            padding: 20px 0;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group.full-width {
+            flex: 1 0 100%;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+            font-family: var(--font-primary);
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 2px rgba(0, 68, 148, 0.2);
+        }
+        
+        textarea {
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .data-table th {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .data-table tbody tr {
+            transition: var(--transition-fast);
+        }
+        
+        .data-table tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .action-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            margin-right: 5px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .action-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+        }
+        
+        .action-btn.edit:hover {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info-color);
+        }
+        
+        .action-btn.delete:hover {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--danger-color);
+        }
+        
+        /* Grid de Serviços */
+        .servicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        
+        .servico-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            transition: var(--transition-fast);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .servico-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .servico-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+        
+        .servico-card.consultoria::before {
+            background-color: var(--primary-color);
+        }
+        
+        .servico-card.desenvolvimento::before {
+            background-color: var(--accent-color);
+        }
+        
+        .servico-card.marketing::before {
+            background-color: var(--success-color);
+        }
+        
+        .servico-card.design::before {
+            background-color: var(--info-color);
+        }
+        
+        .servico-card.suporte::before {
+            background-color: var(--warning-color);
+        }
+        
+        .servico-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .servico-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+        
+        .servico-category {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .servico-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--light-text);
+        }
+        
+        .servico-duration {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+        
+        .servico-description {
+            margin: 15px 0;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+        
+        .servico-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .servico-stats {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .servico-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .servicos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // Inicializar componentes comuns
+        document.addEventListener('DOMContentLoaded', function() {
+            KolibraUtils.initCommonComponents();
+            
+            // Inicializar gerenciamento de serviços
+            initServicosManager();
+        });
+        
+        // Gerenciamento de Serviços
+        function initServicosManager() {
+            const servicoForm = document.getElementById('servicoForm');
+            const limparServicoBtn = document.getElementById('limparServicoBtn');
+            const servicosTableBody = document.getElementById('servicosTableBody');
+            const noServicosMessage = document.getElementById('noServicosMessage');
+            const servicosGrid = document.getElementById('servicosGrid');
+            const noServicosGridMessage = document.getElementById('noServicosGridMessage');
+            
+            // Carregar serviços do localStorage
+            loadServicos();
+            
+            // Event listener para o formulário de serviços
+            servicoForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Obter valores do formulário
+                const servico = {
+                    id: generateServicoId(),
+                    nome: document.getElementById('nomeServico').value,
+                    categoria: document.getElementById('categoriaServico').value,
+                    valor: parseFloat(document.getElementById('valorServico').value),
+                    duracao: parseInt(document.getElementById('duracaoServico').value),
+                    descricao: document.getElementById('descricaoServico').value,
+                    vendas: 0,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Salvar serviço
+                saveServico(servico);
+                
+                // Limpar formulário
+                servicoForm.reset();
+                
+                // Mostrar alerta de sucesso
+                KolibraUtils.showAlert('Serviço cadastrado com sucesso!', 'success');
+            });
+            
+            // Event listener para o botão de limpar
+            limparServicoBtn.addEventListener('click', function() {
+                servicoForm.reset();
+            });
+            
+            // Função para carregar serviços do localStorage
+            function loadServicos() {
+                const servicos = getServicos();
+                
+                // Limpar tabela e grid
+                servicosTableBody.innerHTML = '';
+                servicosGrid.innerHTML = '';
+                servicosGrid.appendChild(noServicosGridMessage);
+                
+                // Verificar se há serviços
+                if (servicos.length === 0) {
+                    noServicosMessage.style.display = 'flex';
+                    noServicosGridMessage.style.display = 'flex';
+                    
+                    // Adicionar serviços padrão se não houver nenhum
+                    if (confirm('Deseja adicionar alguns serviços de exemplo?')) {
+                        addServicosExemplo();
+                        return;
+                    }
+                    return;
+                }
+                
+                // Ocultar mensagens de "sem serviços"
+                noServicosMessage.style.display = 'none';
+                noServicosGridMessage.style.display = 'none';
+                
+                // Ordenar serviços por categoria e nome
+                servicos.sort((a, b) => {
+                    if (a.categoria === b.categoria) {
+                        return a.nome.localeCompare(b.nome);
+                    }
+                    return a.categoria.localeCompare(b.categoria);
+                });
+                
+                // Adicionar serviços à tabela
+                servicos.forEach(servico => {
+                    // Adicionar à tabela
+                    const tr = document.createElement('tr');
+                    
+                    tr.innerHTML = `
+                        <td>${servico.id}</td>
+                        <td>${servico.nome}</td>
+                        <td>${servico.categoria}</td>
+                        <td>${KolibraUtils.formatCurrency(servico.valor)}</td>
+                        <td>${servico.duracao} horas</td>
+                        <td>${servico.vendas}</td>
+                        <td>
+                            <div class="action-btn view" title="Visualizar" onclick="viewServico('${servico.id}')">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="action-btn edit" title="Editar" onclick="editServico('${servico.id}')">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="action-btn delete" title="Excluir" onclick="deleteServico('${servico.id}')">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </td>
+                    `;
+                    
+                    servicosTableBody.appendChild(tr);
+                    
+                    // Adicionar ao grid
+                    const card = document.createElement('div');
+                    card.className = `servico-card ${servico.categoria.toLowerCase()}`;
+                    
+                    card.innerHTML = `
+                        <div class="servico-header">
+                            <div>
+                                <div class="servico-title">${servico.nome}</div>
+                                <div class="servico-category">${servico.categoria}</div>
+                            </div>
+                            <div>
+                                <div class="servico-price">${KolibraUtils.formatCurrency(servico.valor)}</div>
+                                <div class="servico-duration">${servico.duracao} horas</div>
+                            </div>
+                        </div>
+                        <div class="servico-description">${servico.descricao}</div>
+                        <div class="servico-footer">
+                            <div class="servico-stats">Vendas: ${servico.vendas}</div>
+                            <div class="servico-actions">
+                                <div class="action-btn edit" title="Editar" onclick="editServico('${servico.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="action-btn delete" title="Excluir" onclick="deleteServico('${servico.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    servicosGrid.appendChild(card);
+                });
+            }
+            
+            // Função para adicionar serviços de exemplo
+            function addServicosExemplo() {
+                const servicosExemplo = [
+                    {
+                        id: 'S0001',
+                        nome: 'Consultoria Estratégica',
+                        categoria: 'Consultoria',
+                        valor: 5000,
+                        duracao: 20,
+                        descricao: 'Análise completa do negócio e desenvolvimento de estratégias para crescimento e otimização de processos.',
+                        vendas: 3,
+                        timestamp: new Date().toISOString()
+                    },
+                    {
+                        id: 'S0002',
+                        nome: 'Desenvolvimento Web',
+                        categoria: 'Desenvolvimento',
+                        valor: 8000,
+                        duracao: 80,
+                        descricao: 'Criação de websites responsivos e aplicações web com foco em experiência do usuário e performance.',
+                        vendas: 5,
+                        timestamp: new Date().toISOString()
+                    },
+                    {
+                        id: 'S0003',
+                        nome: 'Marketing Digital',
+                        categoria: 'Marketing',
+                        valor: 3500,
+                        duracao: 30,
+                        descricao: 'Estratégias de marketing digital, incluindo SEO, mídias sociais e campanhas de anúncios.',
+                        vendas: 7,
+                        timestamp: new Date().toISOString()
+                    },
+                    {
+                        id: 'S0004',
+                        nome: 'Design Gráfico',
+                        categoria: 'Design',
+                        valor: 2500,
+                        duracao: 25,
+                        descricao: 'Criação de identidade visual, materiais gráficos e design para mídias sociais.',
+                        vendas: 4,
+                        timestamp: new Date().toISOString()
+                    },
+                    {
+                        id: 'S0005',
+                        nome: 'Suporte Técnico',
+                        categoria: 'Suporte',
+                        valor: 1500,
+                        duracao: 10,
+                        descricao: 'Suporte técnico para sistemas e infraestrutura, incluindo manutenção preventiva e corretiva.',
+                        vendas: 6,
+                        timestamp: new Date().toISOString()
+                    }
+                ];
+                
+                localStorage.setItem('kolibra_servicos', JSON.stringify(servicosExemplo));
+                loadServicos();
+                
+                // Mostrar alerta de sucesso
+                KolibraUtils.showAlert('Serviços de exemplo adicionados com sucesso!', 'success');
+            }
+            
+            // Função para salvar serviço
+            function saveServico(servico) {
+                const servicos = getServicos();
+                servicos.push(servico);
+                localStorage.setItem('kolibra_servicos', JSON.stringify(servicos));
+                
+                // Atualizar tabela e grid
+                loadServicos();
+            }
+            
+            // Função para gerar ID único
+            function generateServicoId() {
+                return 'S' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            }
+        }
+        
+        // Função para obter serviços do localStorage
+        function getServicos() {
+            const servicos = localStorage.getItem('kolibra_servicos');
+            return servicos ? JSON.parse(servicos) : [];
+        }
+        
+        // Função para visualizar serviço
+        function viewServico(id) {
+            const servicos = getServicos();
+            const servico = servicos.find(s => s.id === id);
+            
+            if (servico) {
+                alert(`Detalhes do Serviço ${servico.id}:\n\nNome: ${servico.nome}\nCategoria: ${servico.categoria}\nValor: ${KolibraUtils.formatCurrency(servico.valor)}\nDuração: ${servico.duracao} horas\nVendas: ${servico.vendas}\nDescrição: ${servico.descricao}`);
+            }
+        }
+        
+        // Função para editar serviço
+        function editServico(id) {
+            const servicos = getServicos();
+            const servico = servicos.find(s => s.id === id);
+            
+            if (servico) {
+                // Preencher formulário com dados do serviço
+                document.getElementById('nomeServico').value = servico.nome;
+                document.getElementById('categoriaServico').value = servico.categoria;
+                document.getElementById('valorServico').value = servico.valor;
+                document.getElementById('duracaoServico').value = servico.duracao;
+                document.getElementById('descricaoServico').value = servico.descricao;
+                
+                // Remover serviço atual
+                deleteServico(id, true);
+                
+                // Rolar para o formulário
+                document.querySelector('.card-xl').scrollIntoView({ behavior: 'smooth' });
+                
+                // Mostrar alerta
+                KolibraUtils.showAlert('Editando serviço ' + id, 'info');
+            }
+        }
+        
+        // Função para excluir serviço
+        function deleteServico(id, silentMode = false) {
+            if (!silentMode && !confirm('Tem certeza que deseja excluir este serviço?')) {
+                return;
+            }
+            
+            const servicos = getServicos();
+            const updatedServicos = servicos.filter(s => s.id !== id);
+            
+            localStorage.setItem('kolibra_servicos', JSON.stringify(updatedServicos));
+            
+            // Atualizar tabela e grid
+            const servicosTableBody = document.getElementById('servicosTableBody');
+            const noServicosMessage = document.getElementById('noServicosMessage');
+            const servicosGrid = document.getElementById('servicosGrid');
+            const noServicosGridMessage = document.getElementById('noServicosGridMessage');
+            
+            // Limpar tabela e grid
+            servicosTableBody.innerHTML = '';
+            servicosGrid.innerHTML = '';
+            servicosGrid.appendChild(noServicosGridMessage);
+            
+            // Verificar se há serviços
+            if (updatedServicos.length === 0) {
+                noServicosMessage.style.display = 'flex';
+                noServicosGridMessage.style.display = 'flex';
+            } else {
+                // Ocultar mensagens de "sem serviços"
+                noServicosMessage.style.display = 'none';
+                noServicosGridMessage.style.display = 'none';
+                
+                // Ordenar serviços por categoria e nome
+                updatedServicos.sort((a, b) => {
+                    if (a.categoria === b.categoria) {
+                        return a.nome.localeCompare(b.nome);
+                    }
+                    return a.categoria.localeCompare(b.categoria);
+                });
+                
+                // Adicionar serviços à tabela e grid
+                updatedServicos.forEach(servico => {
+                    // Adicionar à tabela
+                    const tr = document.createElement('tr');
+                    
+                    tr.innerHTML = `
+                        <td>${servico.id}</td>
+                        <td>${servico.nome}</td>
+                        <td>${servico.categoria}</td>
+                        <td>${KolibraUtils.formatCurrency(servico.valor)}</td>
+                        <td>${servico.duracao} horas</td>
+                        <td>${servico.vendas}</td>
+                        <td>
+                            <div class="action-btn view" title="Visualizar" onclick="viewServico('${servico.id}')">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="action-btn edit" title="Editar" onclick="editServico('${servico.id}')">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="action-btn delete" title="Excluir" onclick="deleteServico('${servico.id}')">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </td>
+                    `;
+                    
+                    servicosTableBody.appendChild(tr);
+                    
+                    // Adicionar ao grid
+                    const card = document.createElement('div');
+                    card.className = `servico-card ${servico.categoria.toLowerCase()}`;
+                    
+                    card.innerHTML = `
+                        <div class="servico-header">
+                            <div>
+                                <div class="servico-title">${servico.nome}</div>
+                                <div class="servico-category">${servico.categoria}</div>
+                            </div>
+                            <div>
+                                <div class="servico-price">${KolibraUtils.formatCurrency(servico.valor)}</div>
+                                <div class="servico-duration">${servico.duracao} horas</div>
+                            </div>
+                        </div>
+                        <div class="servico-description">${servico.descricao}</div>
+                        <div class="servico-footer">
+                            <div class="servico-stats">Vendas: ${servico.vendas}</div>
+                            <div class="servico-actions">
+                                <div class="action-btn edit" title="Editar" onclick="editServico('${servico.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="action-btn delete" title="Excluir" onclick="deleteServico('${servico.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    servicosGrid.appendChild(card);
+                });
+            }
+            
+            if (!silentMode) {
+                // Mostrar alerta de sucesso
+                KolibraUtils.showAlert('Serviço excluído com sucesso!', 'success');
+            }
+        }
+    </script>
+</body>
+</html>
