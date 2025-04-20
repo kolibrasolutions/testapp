@@ -16,11 +16,12 @@
     <!-- CSS Personalizado -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/mobile.css">
-    <link rel="stylesheet" href="css/flashcards-mobile.css">
 </head>
 <body>
-    <!-- Mobile Menu Toggle Removido -->
-    <!-- Removido conforme solicitação do usuário, já que temos a navegação inferior -->
+    <!-- Mobile Menu Toggle -->
+    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
     
     <!-- Theme Toggle -->
     <div class="theme-toggle" id="theme-toggle">
@@ -232,8 +233,6 @@
     <script type="module">
         import LoginSystem from './js/login.js';
         import ThemeManager from './js/theme.js';
-        import DashboardData from './js/dashboard-data.js';
-        import FlashcardTracker from './js/flashcard-tracker.js';
         
         document.addEventListener('DOMContentLoaded', function() {
             // Inicializar sistema de login
@@ -244,17 +243,6 @@
             // Inicializar gerenciador de tema
             const themeManager = new ThemeManager();
             themeManager.initThemeToggle();
-            
-            // Inicializar dados do dashboard
-            const dashboardData = new DashboardData();
-            
-            // Inicializar rastreador de flashcards
-            const flashcardTracker = new FlashcardTracker(dashboardData);
-            
-            // Atualizar nome e avatar do usuário
-            const userData = dashboardData.getUserData();
-            document.getElementById('user-name').textContent = userData.name;
-            document.getElementById('user-avatar').textContent = userData.name.charAt(0);
             
             // Toggle da sidebar
             const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -507,9 +495,6 @@
             
             nextBtn.addEventListener('click', function() {
                 if (currentIndex < filteredCards.length - 1) {
-                    // Registrar estudo do flashcard atual antes de avançar
-                    flashcardTracker.recordStudied(filteredCards[currentIndex]);
-                    
                     currentIndex++;
                     updateFlashcardDisplay();
                 }
@@ -550,9 +535,6 @@
                 if (touchEndX < touchStartX - swipeThreshold) {
                     // Swipe para esquerda (próximo)
                     if (currentIndex < filteredCards.length - 1) {
-                        // Registrar estudo do flashcard atual antes de avançar
-                        flashcardTracker.recordStudied(filteredCards[currentIndex]);
-                        
                         currentIndex++;
                         updateFlashcardDisplay();
                     }

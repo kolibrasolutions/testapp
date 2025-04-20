@@ -51,8 +51,7 @@ class LoginSystem {
   login(username, password, rememberMe = false) {
     // In a real application, this would validate against a server
     // For demo purposes, we're using a simple check
-    // Aceita qualquer senha para o usuário juliano para facilitar testes
-    if (username === 'juliano') {
+    if (username === 'juliano' && password === 'admin123') {
       // Store login information
       const storage = rememberMe ? localStorage : sessionStorage;
       
