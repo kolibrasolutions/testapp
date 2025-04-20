@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmaLearn - Flashcards</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/flashcards-mobile.css">
+</head>
+<body>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-items">
+            <a href="index.html" class="mobile-nav-item">
+                <div class="mobile-nav-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="mobile-nav-text">Dashboard</div>
+            </a>
+            <a href="flashcards.html" class="mobile-nav-item active">
+                <div class="mobile-nav-icon"><i class="fas fa-clone"></i></div>
+                <div class="mobile-nav-text">Flashcards</div>
+            </a>
+            <a href="simulador.html" class="mobile-nav-item">
+                <div class="mobile-nav-icon"><i class="fas fa-comments"></i></div>
+                <div class="mobile-nav-text">Simulador</div>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <div class="mobile-nav-icon"><i class="fas fa-chart-bar"></i></div>
+                <div class="mobile-nav-text">Estatísticas</div>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <div class="mobile-nav-icon"><i class="fas fa-user"></i></div>
+                <div class="mobile-nav-text">Perfil</div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-sun"></i>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <div class="header">
+            <h1 class="page-title">Flashcards</h1>
+        </div>
+        
+        <!-- Versão Mobile dos Flashcards -->
+        <div class="mobile-flashcard-view">
+            <div class="card-header">
+                <h2 class="card-title">Estude os Medicamentos</h2>
+                <div class="card-subtitle">Deslize para navegar</div>
+            </div>
+            
+            <div class="category-pills-mobile">
+                <div class="category-pill-mobile active" data-category="all">Todos</div>
+                <div class="category-pill-mobile" data-category="respiratorios">Respiratórios</div>
+                <div class="category-pill-mobile" data-category="dermatologicos">Dermatológicos</div>
+                <div class="category-pill-mobile" data-category="digestivos">Digestivos</div>
+                <div class="category-pill-mobile" data-category="dores">Dores</div>
+            </div>
+            
+            <div class="flashcard-mobile" id="mobile-flashcard">
+                <div class="flashcard-mobile-inner">
+                    <div class="flashcard-mobile-front">
+                        <div class="flashcard-mobile-category" id="mobile-category">Categoria</div>
+                        <div class="flashcard-mobile-title" id="mobile-title">Nome do Medicamento</div>
+                        <div class="flashcard-mobile-footer">Toque para ver a indicação</div>
+                    </div>
+                    <div class="flashcard-mobile-back">
+                        <div class="flashcard-mobile-category" id="mobile-category-back">Categoria</div>
+                        <div class="flashcard-mobile-content" id="mobile-content">Informações sobre o medicamento e suas indicações.</div>
+                        <div class="flashcard-mobile-footer">Toque para voltar</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flashcard-mobile-controls">
+                <button class="flashcard-mobile-btn" id="mobile-prev-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="flashcard-mobile-counter">
+                    <span id="mobile-current-card">1</span> / <span id="mobile-total-cards">10</span>
+                </div>
+                <button class="flashcard-mobile-btn" id="mobile-next-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <div class="flashcard-mobile-difficulty">
+                <button class="difficulty-btn easy" id="easy-btn">Fácil</button>
+                <button class="difficulty-btn medium" id="medium-btn">Médio</button>
+                <button class="difficulty-btn hard" id="hard-btn">Difícil</button>
+            </div>
+            
+            <!-- Estatísticas Rápidas -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Seu Progresso</h3>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon primary">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="stat-value" id="studied-count">0</div>
+                        <div class="stat-label">Estudados Hoje</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon success">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-value" id="streak-count">0</div>
+                        <div class="stat-label">Sequência</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module">
+        import LoginSystem from './js/login.js';
+        import ThemeManager from './js/theme.js';
+        import DashboardData from './js/dashboard-data.js';
+        import FlashcardTracker from './js/flashcard-tracker.js';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar sistema de login
+            const loginSystem = new LoginSystem();
+            loginSystem.requireLogin();
+            loginSystem.updateUserInterface();
+            
+            // Inicializar gerenciador de tema
+            const themeManager = new ThemeManager();
+            themeManager.initThemeToggle();
+            
+            // Inicializar dados do dashboard
+            const dashboardData = new DashboardData();
+            
+            // Inicializar rastreador de flashcards
+            const flashcardTracker = new FlashcardTracker(dashboardData);
+            
+            // Atualizar nome e avatar do usuário
+            const userData = dashboardData.getUserData();
+            
+            // Dados de exemplo para flashcards
+            const flashcardsData = [
+                {
+                    id: 1,
+                    category: 'respiratorios',
+                    front: 'Loratadina',
+                    back: 'Anti-histamínico não sedativo indicado para alergias, rinite alérgica e urticária.',
+                    difficulty: 'easy'
+                },
+                {
+                    id: 2,
+                    category: 'respiratorios',
+                    front: 'Dexclorfeniramina',
+                    back: 'Anti-histamínico de primeira geração para alergias, rinite e sintomas de resfriado comum.',
+                    difficulty: 'medium'
+                },
+                {
+                    id: 3,
+                    category: 'respiratorios',
+                    front: 'Fenilefrina',
+                    back: 'Descongestionante nasal que alivia a congestão associada a resfriados, sinusite e rinite alérgica.',
+                    difficulty: 'hard'
+                },
+                {
+                    id: 4,
+                    category: 'dermatologicos',
+                    front: 'Dexpantenol',
+                    back: 'Hidratante e cicatrizante para pele seca, irritada ou com pequenas lesões.',
+                    difficulty: 'easy'
+                },
+                {
+                    id: 5,
+                    category: 'dermatologicos',
+                    front: 'Cetoconazol',
+                    back: 'Antifúngico para tratamento de micoses cutâneas, dermatite seborreica e caspa.',
+                    difficulty: 'medium'
+                },
+                {
+                    id: 6,
+                    category: 'digestivos',
+                    front: 'Simeticona',
+                    back: 'Antiespumante que alivia gases, distensão abdominal e flatulência.',
+                    difficulty: 'easy'
+                },
+                {
+                    id: 7,
+                    category: 'digestivos',
+                    front: 'Omeprazol',
+                    back: 'Inibidor da bomba de prótons para azia, refluxo gastroesofágico e úlceras gástricas.',
+                    difficulty: 'medium'
+                },
+                {
+                    id: 8,
+                    category: 'dores',
+                    front: 'Paracetamol',
+                    back: 'Analgésico e antitérmico para dores leves a moderadas e febre.',
+                    difficulty: 'easy'
+                },
+                {
+                    id: 9,
+                    category: 'dores',
+                    front: 'Ibuprofeno',
+                    back: 'Anti-inflamatório não esteroidal para dores, inflamação e febre.',
+                    difficulty: 'medium'
+                },
+                {
+                    id: 10,
+                    category: 'dores',
+                    front: 'Dipirona',
+                    back: 'Analgésico, antitérmico e antiespasmódico para dores e febre.',
+                    difficulty: 'hard'
+                }
+            ];
+            
+            // Variáveis para controle dos flashcards
+            let currentCategory = 'all';
+            let currentIndex = 0;
+            let filteredCards = [...flashcardsData];
+            
+            // Elementos DOM
+            const flashcard = document.getElementById('mobile-flashcard');
+            const prevBtn = document.getElementById('mobile-prev-btn');
+            const nextBtn = document.getElementById('mobile-next-btn');
+            const currentCardEl = document.getElementById('mobile-current-card');
+            const totalCardsEl = document.getElementById('mobile-total-cards');
+            const categoryPills = document.querySelectorAll('.category-pill-mobile');
+            const easyBtn = document.getElementById('easy-btn');
+            const mediumBtn = document.getElementById('medium-btn');
+            const hardBtn = document.getElementById('hard-btn');
+            
+            // Função para obter o nome da categoria
+            function getCategoryName(category) {
+                const categoryMap = {
+                    'respiratorios': 'Respiratórios',
+                    'dermatologicos': 'Dermatológicos',
+                    'digestivos': 'Digestivos',
+                    'dores': 'Dores'
+                };
+                
+                return categoryMap[category] || 'Geral';
+            }
+            
+            // Função para atualizar o flashcard exibido
+            function updateFlashcard() {
+                if (filteredCards.length === 0) {
+                    // Sem flashcards para exibir
+                    document.getElementById('mobile-category').textContent = '';
+                    document.getElementById('mobile-category-back').textContent = '';
+                    document.getElementById('mobile-title').textContent = 'Nenhum flashcard disponível';
+                    document.getElementById('mobile-content').textContent = 'Selecione outra categoria';
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+                
+                const currentCard = filteredCards[currentIndex];
+                
+                // Atualizar frente do flashcard
+                document.getElementById('mobile-category').textContent = getCategoryName(currentCard.category);
+                document.getElementById('mobile-category-back').textContent = getCategoryName(currentCard.category);
+                document.getElementById('mobile-title').textContent = currentCard.front;
+                document.getElementById('mobile-content').textContent = currentCard.back;
+                
+                // Atualizar contador
+                currentCardEl.textContent = currentIndex + 1;
+                totalCardsEl.textContent = filteredCards.length;
+                
+                // Atualizar estado dos botões
+                prevBtn.disabled = currentIndex === 0;
+                prevBtn.classList.toggle('disabled', currentIndex === 0);
+                nextBtn.disabled = currentIndex === filteredCards.length - 1;
+                nextBtn.classList.toggle('disabled', currentIndex === filteredCards.length - 1);
+                
+                // Resetar estado do flashcard (não virado)
+                flashcard.classList.remove('flipped');
+            }
+            
+            // Inicializar flashcard
+            updateFlashcard();
+            
+            // Evento de clique para virar o flashcard
+            flashcard.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+            });
+            
+            // Eventos para botões de navegação
+            prevBtn.addEventListener('click', function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateFlashcard();
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentIndex < filteredCards.length - 1) {
+                    // Registrar estudo do flashcard atual antes de avançar
+                    flashcardTracker.recordStudied(filteredCards[currentIndex]);
+                    
+                    currentIndex++;
+                    updateFlashcard();
+                }
+            });
+            
+            // Eventos para botões de dificuldade
+            easyBtn.addEventListener('click', function() {
+                if (filteredCards.length > 0) {
+                    flashcardTracker.recordDifficulty(filteredCards[currentIndex], 'easy');
+                    nextBtn.click(); // Avançar para o próximo
+                }
+            });
+            
+            mediumBtn.addEventListener('click', function() {
+                if (filteredCards.length > 0) {
+                    flashcardTracker.recordDifficulty(filteredCards[currentIndex], 'medium');
+                    nextBtn.click(); // Avançar para o próximo
+                }
+            });
+            
+            hardBtn.addEventListener('click', function() {
+                if (filteredCards.length > 0) {
+                    flashcardTracker.recordDifficulty(filteredCards[currentIndex], 'hard');
+                    nextBtn.click(); // Avançar para o próximo
+                }
+            });
+            
+            // Eventos para filtros de categoria
+            categoryPills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    // Atualizar UI
+                    categoryPills.forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Atualizar categoria atual
+                    currentCategory = this.dataset.category;
+                    
+                    // Filtrar cards pela categoria selecionada
+                    filteredCards = currentCategory === 'all' 
+                        ? [...flashcardsData] 
+                        : flashcardsData.filter(card => card.category === currentCategory);
+                    
+                    // Resetar índice
+                    currentIndex = 0;
+                    
+                    // Atualizar exibição
+                    updateFlashcard();
+                });
+            });
+            
+            // Suporte a gestos de swipe para dispositivos móveis
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            flashcard.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            flashcard.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // Swipe para esquerda (próximo)
+                    if (currentIndex < filteredCards.length - 1) {
+                        // Registrar estudo do flashcard atual antes de avançar
+                        flashcardTracker.recordStudied(filteredCards[currentIndex]);
+                        
+                        currentIndex++;
+                        updateFlashcard();
+                    }
+                }
+                
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    // Swipe para direita (anterior)
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateFlashcard();
+                    }
+                }
+            }
+            
+            // Atualizar estatísticas
+            document.getElementById('studied-count').textContent = flashcardTracker.getStudiedToday();
+            document.getElementById('streak-count').textContent = userData.streak || 0;
+        });
+    </script>
+</body>
+</html>

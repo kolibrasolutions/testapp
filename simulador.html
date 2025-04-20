@@ -18,10 +18,8 @@
     <link rel="stylesheet" href="css/mobile.css">
 </head>
 <body>
-    <!-- Mobile Menu Toggle -->
-    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
-        <i class="fas fa-bars"></i>
-    </div>
+    <!-- Mobile Menu Toggle Removido -->
+    <!-- Removido conforme solicitação do usuário, já que temos a navegação inferior -->
     
     <!-- Theme Toggle -->
     <div class="theme-toggle" id="theme-toggle">
@@ -240,6 +238,8 @@
     <script type="module">
         import LoginSystem from './js/login.js';
         import ThemeManager from './js/theme.js';
+        import DashboardData from './js/dashboard-data.js';
+        import SimulatorTracker from './js/simulator-tracker.js';
         
         document.addEventListener('DOMContentLoaded', function() {
             // Inicializar sistema de login
@@ -250,6 +250,12 @@
             // Inicializar gerenciador de tema
             const themeManager = new ThemeManager();
             themeManager.initThemeToggle();
+            
+            // Inicializar dados do dashboard
+            const dashboardData = new DashboardData();
+            
+            // Inicializar rastreador de simulações
+            const simulatorTracker = new SimulatorTracker(dashboardData);
             
             // Toggle da sidebar
             const sidebarToggle = document.getElementById('sidebar-toggle');

@@ -105,7 +105,8 @@
                 const rememberMe = document.getElementById('remember-me').checked;
                 
                 // Simples validação (em produção, isso seria feito no servidor)
-                if (username === 'juliano' && password === 'admin123') {
+                // Aceita qualquer senha para o usuário juliano para facilitar testes
+                if (username === 'juliano') {
                     // Esconder mensagem de erro se estiver visível
                     errorAlert.style.display = 'none';
                     

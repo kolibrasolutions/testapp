@@ -18,10 +18,8 @@
     <link rel="stylesheet" href="css/mobile.css">
 </head>
 <body>
-    <!-- Mobile Menu Toggle -->
-    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
-        <i class="fas fa-bars"></i>
-    </div>
+    <!-- Mobile Menu Toggle Removido -->
+    <!-- Removido conforme solicitação do usuário, já que temos a navegação inferior -->
     
     <!-- Theme Toggle -->
     <div class="theme-toggle" id="theme-toggle">
@@ -384,6 +382,8 @@
     <script type="module">
         import LoginSystem from './js/login.js';
         import ThemeManager from './js/theme.js';
+        import DashboardData from './js/dashboard-data.js';
+        import DashboardView from './js/dashboard-view.js';
         
         document.addEventListener('DOMContentLoaded', function() {
             // Inicializar sistema de login
@@ -395,6 +395,107 @@
             const themeManager = new ThemeManager();
             themeManager.initThemeToggle();
             
+            // Inicializar dados do dashboard
+            const dashboardData = new DashboardData();
+            
+            // Atualizar sequência de dias de estudo
+            dashboardData.updateStreak();
+            
+            // Inicializar visualização do dashboard
+            const dashboardView = new DashboardView(dashboardData);
+            dashboardView.updateAll();
+            
+            // Atualizar nome e avatar do usuário
+            document.getElementById('user-name').textContent = userData.name;
+            document.getElementById('user-avatar').textContent = userData.name.charAt(0);
+            
+            // Atualizar estatísticas gerais
+            document.querySelector('.stats-value').textContent = userData.progress + '%';
+            document.querySelectorAll('.stats-value')[1].textContent = statsData.flashcardsStudied;
+            document.querySelectorAll('.stats-value')[2].textContent = statsData.simulationsCompleted;
+            document.querySelectorAll('.stats-value')[3].textContent = userData.streak;
+            
+            // Atualizar barras de progresso
+            document.querySelector('.progress-label').textContent = 'Nível ' + userData.level;
+            document.querySelector('.progress-percentage').textContent = userData.progress + '%';
+            document.querySelector('.progress-value').style.width = userData.progress + '%';
+            
+            document.querySelectorAll('.progress-percentage')[1].textContent = 
+                Math.round(statsData.flashcardsStudied / 50 * 100) + '%';
+            document.querySelectorAll('.progress-value')[1].style.width = 
+                Math.round(statsData.flashcardsStudied / 50 * 100) + '%';
+            
+            document.querySelectorAll('.progress-percentage')[2].textContent = 
+                Math.round(statsData.correctAnswers) + '%';
+            document.querySelectorAll('.progress-value')[2].style.width = 
+                Math.round(statsData.correctAnswers) + '%';
+            
+            document.querySelectorAll('.progress-percentage')[3].textContent = 
+                Math.round(userData.streak / userData.personalRecord * 100) + '%';
+            document.querySelectorAll('.progress-value')[3].style.width = 
+                Math.round(userData.streak / userData.personalRecord * 100) + '%';
+            
+            // Atualizar atividades recentes
+            const activityList = document.querySelector('.activity-list');
+            activityList.innerHTML = '';
+            
+            activitiesData.forEach(activity => {
+                let iconClass = '';
+                switch(activity.type) {
+                    case 'flashcard': iconClass = 'primary'; break;
+                    case 'simulation': iconClass = 'accent'; break;
+                    case 'achievement': iconClass = 'success'; break;
+                    case 'streak': iconClass = 'warning'; break;
+                }
+                
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                activityItem.innerHTML = `
+                    <div class="activity-icon ${iconClass}">
+                        <i class="fas ${activity.type === 'flashcard' ? 'fa-clone' : 
+                                        activity.type === 'simulation' ? 'fa-comments' : 
+                                        activity.type === 'achievement' ? 'fa-trophy' : 'fa-fire'}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">${activity.title}</div>
+                        <div class="activity-subtitle">${activity.subtitle}</div>
+                    </div>
+                    <div class="activity-time">${activity.time}</div>
+                `;
+                
+                activityList.appendChild(activityItem);
+            });
+            
+            // Atualizar desafios diários
+            const quickActions = document.querySelector('.quick-actions');
+            quickActions.innerHTML = '';
+            
+            challengesData.forEach(challenge => {
+                let iconClass = '';
+                switch(challenge.type) {
+                    case 'flashcard': iconClass = 'primary'; break;
+                    case 'simulation': iconClass = 'accent'; break;
+                    case 'category': iconClass = 'success'; break;
+                    case 'review': iconClass = 'warning'; break;
+                }
+                
+                const quickAction = document.createElement('div');
+                quickAction.className = 'quick-action';
+                quickAction.innerHTML = `
+                    <div class="quick-action-icon ${iconClass}">
+                        <i class="fas ${challenge.type === 'flashcard' ? 'fa-clone' : 
+                                        challenge.type === 'simulation' ? 'fa-comments' : 
+                                        challenge.type === 'category' ? 'fa-th-large' : 'fa-star'}"></i>
+                    </div>
+                    <div class="quick-action-content">
+                        <div class="quick-action-title">${challenge.title}</div>
+                        <div class="quick-action-subtitle">Progresso: ${challenge.progress}/${challenge.total}</div>
+                    </div>
+                `;
+                
+                quickActions.appendChild(quickAction);
+            });
+            
             // Toggle da sidebar
             const sidebarToggle = document.getElementById('sidebar-toggle');
             const sidebar = document.getElementById('sidebar');
@@ -402,13 +503,6 @@
             
             sidebarToggle.addEventListener('click', function() {
                 sidebar.classList.toggle('collapsed');
-            });
-            
-            // Toggle do menu mobile
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            
-            mobileMenuToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
             });
             
             // Submenu toggle
@@ -465,7 +559,13 @@
                     labels: ['Respiratórios', 'Dermatológicos', 'Digestivos', 'Dores', 'Outros'],
                     datasets: [{
                         label: 'Domínio por Categoria',
-                        data: [75, 60, 85, 40, 30],
+                        data: [
+                            categoriesData.respiratorios, 
+                            categoriesData.dermatologicos, 
+                            categoriesData.digestivos, 
+                            categoriesData.dores, 
+                            categoriesData.outros
+                        ],
                         backgroundColor: 'rgba(30, 132, 73, 0.2)',
                         borderColor: 'rgba(30, 132, 73, 1)',
                         borderWidth: 2,
@@ -509,10 +609,10 @@
             new Chart(progressoCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    labels: progressData.days,
                     datasets: [{
                         label: 'Flashcards Estudados',
-                        data: [5, 12, 8, 15, 10, 20, 12],
+                        data: progressData.flashcards,
                         backgroundColor: 'rgba(30, 132, 73, 0.2)',
                         borderColor: 'rgba(30, 132, 73, 1)',
                         borderWidth: 2,
@@ -520,7 +620,7 @@
                         fill: true
                     }, {
                         label: 'Simulações Completadas',
-                        data: [1, 2, 1, 3, 0, 2, 2],
+                        data: progressData.simulations,
                         backgroundColor: 'rgba(52, 152, 219, 0.2)',
                         borderColor: 'rgba(52, 152, 219, 1)',
                         borderWidth: 2,
